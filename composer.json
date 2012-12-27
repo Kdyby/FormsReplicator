@@ -1,7 +1,7 @@
 {
-    "name":"kdyby/forms-replicator",
+    "name":"kdyby/replicator",
     "type":"library",
-    "description":"Nette forms container replicator",
+    "description":"Nette forms container replicator aka addDynamic",
     "keywords":["nette", "kdyby", "forms", "replicator", "addDynamic"],
     "homepage":"http://kdyby.org",
     "license":["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
@@ -13,15 +13,12 @@
     ],
     "support":{
         "email":"filip@prochazka.su",
-        "issues":"https://github.com/kdyby/framework/issues"
+        "issues":"https://github.com/kdyby/replicator/issues"
     },
     "require":{
         "nette/nette":"*"
     },
-    "conflict":{
-        "kdyby/framework":"self.version"
-    },
     "autoload":{
-        "files":["Replicator.php"]
+        "files":["src/Kdyby/Replicator.php"]
     }
 }
