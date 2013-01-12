@@ -21,6 +21,7 @@
 	"require-dev": {
 		"nette/tester": "@dev"
 	},
+	"minimum-stability": "dev",
     "autoload":{
         "files":["src/Kdyby/Replicator.php"]
     }
