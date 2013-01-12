@@ -18,6 +18,9 @@
     "require":{
         "nette/nette":"*"
     },
+	"require-dev": {
+		"nette/tester": "@dev"
+	},
     "autoload":{
         "files":["src/Kdyby/Replicator.php"]
     }
