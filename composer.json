@@ -23,6 +23,8 @@
 	},
 	"minimum-stability": "dev",
     "autoload":{
-        "files":["src/Kdyby/Replicator.php"]
+        "psr-0":{
+	        "Kdyby\\Replicator\\" : "src/"
+        }
     }
 }

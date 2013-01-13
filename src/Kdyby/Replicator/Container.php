@@ -8,11 +8,10 @@
  * For the full copyright and license information, please view the file license.md that was distributed with this source code.
  */
 
-namespace Kdyby\Extension\Forms\Replicator;
+namespace Kdyby\Replicator;
 
 use Nette;
 use Nette\Forms\Controls\SubmitButton;
-use Nette\Forms\Container;
 
 
 
@@ -21,10 +20,9 @@ use Nette\Forms\Container;
  * @author Jan Tvrdík
  *
  * @method \Nette\Application\UI\Form getForm()
- * @method \Nette\Forms\Container getParent()
  * @property \Nette\Forms\Container $parent
  */
-class Replicator extends Container
+class Container extends Nette\Forms\Container
 {
 
 	/** @var bool */
@@ -223,7 +221,7 @@ class Replicator extends Container
 	/**
 	 * @param array|\Traversable $values
 	 * @param bool $erase
-	 * @return \Nette\Forms\Container|Replicator
+	 * @return \Nette\Forms\Container|Container
 	 */
 	public function setValues($values, $erase = FALSE)
 	{
@@ -307,7 +305,7 @@ class Replicator extends Container
 	/**
 	 * @internal
 	 * @param \Nette\Application\Request $request
-	 * @return Replicator
+	 * @return Container
 	 */
 	public function setRequest(Nette\Application\Request $request)
 	{
@@ -338,7 +336,7 @@ class Replicator extends Container
 	 * @throws \Nette\InvalidArgumentException
 	 * @return void
 	 */
-	public function remove(Container $container, $cleanUpGroups = FALSE)
+	public function remove(Nette\Forms\Container $container, $cleanUpGroups = FALSE)
 	{
 		if (!$container->parent === $this) {
 			throw new Nette\InvalidArgumentException('Given component ' . $container->name . ' is not children of ' . $this->name . '.');
@@ -455,7 +453,7 @@ class Replicator extends Container
 	 */
 	public function addContainer($name)
 	{
-		return $this[$name] = new Container;
+		return $this[$name] = new Nette\Forms\Container();
 	}
 
 
@@ -489,13 +487,13 @@ class Replicator extends Container
 	public static function register($methodName = 'addDynamic')
 	{
 		if (self::$registered) {
-			Container::extensionMethod(self::$registered, function () {
+			Nette\Forms\Container::extensionMethod(self::$registered, function () {
 				throw new Nette\MemberAccessException;
 			});
 		}
 
-		Container::extensionMethod($methodName, function (Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
-			$control = new Replicator($factory, $createDefault, $forceDefault);
+		Nette\Forms\Container::extensionMethod($methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
+			$control = new Container($factory, $createDefault, $forceDefault);
 			$control->currentGroup = $_this->currentGroup;
 			return $_this[$name] = $control;
 		});
@@ -508,7 +506,7 @@ class Replicator extends Container
 			$replicator = $_this->lookup(__NAMESPACE__ . '\Replicator');
 			$_this->setValidationScope(FALSE);
 			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $callback) {
-				/** @var Replicator $replicator */
+				/** @var Container $replicator */
 				if (is_callable($callback)) {
 					callback($callback)->invoke($replicator, $button->parent);
 				}
@@ -520,7 +518,7 @@ class Replicator extends Container
 		SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
 			$replicator = $_this->lookup(__NAMESPACE__ . '\Replicator');
 			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $allowEmpty, $callback) {
-				/** @var Replicator $replicator */
+				/** @var Container $replicator */
 				if (!is_bool($allowEmpty)) {
 					$callback = callback($allowEmpty);
 					$allowEmpty = FALSE;
@@ -540,6 +538,3 @@ class Replicator extends Container
 	}
 
 }
-
-class_alias(__NAMESPACE__ . '\Replicator', 'Kdyby\Forms\Containers\Replicator');
-Replicator::register();
