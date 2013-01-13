@@ -1,5 +1,5 @@
 {
-    "name":"kdyby/replicator",
+    "name":"kdyby/forms-replicator",
     "type":"library",
     "description":"Nette forms container replicator aka addDynamic",
     "keywords":["nette", "kdyby", "forms", "replicator", "addDynamic"],
