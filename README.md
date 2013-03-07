@@ -16,7 +16,7 @@ Installation
 The best way to install Kdyby/Replicator is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require kdyby/replicator:@dev
+$ composer require kdyby/forms-replicator:@dev
 ```
 
 
