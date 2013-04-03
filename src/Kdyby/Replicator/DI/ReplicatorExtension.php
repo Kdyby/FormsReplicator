@@ -12,7 +12,7 @@ namespace Kdyby\Replicator\DI;
 
 use Kdyby;
 use Nette;
-use Nette\PhpGenerator as Code;
+use Nette\Utils\PhpGenerator as Code;
 
 
 
