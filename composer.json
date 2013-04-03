@@ -24,6 +24,9 @@
 	"autoload": {
 		"psr-0": {
 			"Kdyby\\Replicator\\": "src/"
-		}
+		},
+		"files": [
+			"src/Nette/compatibility.php"
+		]
 	}
 }
