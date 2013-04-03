@@ -12,6 +12,7 @@ namespace Kdyby\Replicator\DI;
 
 use Kdyby;
 use Nette;
+use Nette\Utils\PhpGenerator as Code;
 
 
 
@@ -21,7 +22,7 @@ use Nette;
 class ReplicatorExtension extends Nette\Config\CompilerExtension
 {
 
-	public function afterCompile(Nette\PhpGenerator\ClassType $class)
+	public function afterCompile(Code\ClassType $class)
 	{
 		parent::afterCompile($class);
 
