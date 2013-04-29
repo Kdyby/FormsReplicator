@@ -220,9 +220,10 @@ class Container extends Nette\Forms\Container
 	/**
 	 * @param array|\Traversable $values
 	 * @param bool $erase
+	 * @param bool $onlyDisabled
 	 * @return \Nette\Forms\Container|Container
 	 */
-	public function setValues($values, $erase = FALSE)
+	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
 		foreach ($values as $name => $value) {
 			if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
@@ -230,7 +231,7 @@ class Container extends Nette\Forms\Container
 			}
 		}
 
-		return parent::setValues($values, $erase);
+		return parent::setValues($values, $erase, $onlyDisabled);
 	}
 
 
