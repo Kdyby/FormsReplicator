@@ -414,7 +414,7 @@ class Container extends Nette\Forms\Container
 		$rows = array();
 		$subComponents = array_flip($subComponents);
 		foreach ($httpData as $item) {
-			$rows[] = array_filter(array_diff_key($item, $subComponents)) ?: FALSE;
+			$rows[] = array_filter(array_diff_key($item, $subComponents), 'strlen') ?: FALSE;
 		}
 
 		return count(array_filter($rows));
