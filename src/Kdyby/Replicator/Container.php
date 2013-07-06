@@ -337,7 +337,7 @@ class Container extends Nette\Forms\Container
 	 */
 	public function remove(Nette\Forms\Container $container, $cleanUpGroups = FALSE)
 	{
-		if (!$container->parent === $this) {
+		if ($container->parent !== $this) {
 			throw new Nette\InvalidArgumentException('Given component ' . $container->name . ' is not children of ' . $this->name . '.');
 		}
 
