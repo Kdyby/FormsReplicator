@@ -225,9 +225,11 @@ class Container extends Nette\Forms\Container
 	 */
 	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
-		foreach ($values as $name => $value) {
-			if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
-				$this->createOne($name);
+		if (!$this->form->isAnchored() || !$this->form->isSubmitted()) {
+			foreach ($values as $name => $value) {
+				if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
+					$this->createOne($name);
+				}
 			}
 		}
 
@@ -246,7 +248,11 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		$this->setValues((array)$this->getHttpData());
+		foreach ((array) $this->getHttpData() as $name => $value) {
+			if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
+				$this->createOne($name);
+			}
+		}
 	}
 
 
