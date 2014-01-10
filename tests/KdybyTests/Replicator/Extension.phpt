@@ -39,7 +39,7 @@ class ExtensionTest extends Tester\TestCase
 
 
 
-	public function testFunctional()
+	public function testExtensionMethodIsRegistered()
 	{
 		$this->createContainer(); // initialize
 
