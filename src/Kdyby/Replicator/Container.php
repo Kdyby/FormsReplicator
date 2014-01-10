@@ -517,6 +517,7 @@ class Container extends Nette\Forms\Container
 					callback($callback)->invoke($replicator, $button->parent);
 				}
 				$replicator->remove($button->parent);
+				$button->getForm()->onSuccess = array();
 			};
 			return $_this;
 		});
@@ -536,6 +537,7 @@ class Container extends Nette\Forms\Container
 				if (is_callable($callback)) {
 					callback($callback)->invoke($replicator, $newContainer);
 				}
+				$button->getForm()->onSuccess = array();
 			};
 			return $_this;
 		});
