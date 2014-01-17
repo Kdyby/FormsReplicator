@@ -509,6 +509,9 @@ class Container extends Nette\Forms\Container
 				if (is_callable($callback)) {
 					callback($callback)->invoke($replicator, $button->parent);
 				}
+				if ($form = $button->getForm(FALSE)) {
+					$form->onSuccess = array();
+				}
 				$replicator->remove($button->parent);
 			};
 			return $_this;
