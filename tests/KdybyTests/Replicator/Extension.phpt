@@ -25,6 +25,14 @@ require_once __DIR__ . '/../bootstrap.php';
 class ExtensionTest extends Tester\TestCase
 {
 
+	protected function setUp()
+	{
+		parent::setUp();
+		Tester\Environment::$checkAssertions = FALSE;
+	}
+
+
+
 	/**
 	 * @return \SystemContainer|\Nette\DI\Container
 	 */
