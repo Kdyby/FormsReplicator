@@ -537,12 +537,11 @@ class Container extends Nette\Forms\Container
 					$callback = callback($allowEmpty);
 					$allowEmpty = FALSE;
 				}
-				if ($allowEmpty === FALSE && $replicator->isAllFilled() === FALSE) {
-					return;
-				}
-				$newContainer = $replicator->createOne();
-				if (is_callable($callback)) {
-					callback($callback)->invoke($replicator, $newContainer);
+				if ($allowEmpty === TRUE || $replicator->isAllFilled() === TRUE) {
+					$newContainer = $replicator->createOne();
+					if (is_callable($callback)) {
+						callback($callback)->invoke($replicator, $newContainer);
+					}
 				}
 				$button->getForm()->onSuccess = array();
 			};
