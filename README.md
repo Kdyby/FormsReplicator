@@ -3,7 +3,7 @@ Kdyby/Replicator
 
 [![Build Status](https://travis-ci.org/Kdyby/Replicator.svg?branch=master)](https://travis-ci.org/Kdyby/Replicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/Kdyby/Replicator.svg)](https://packagist.org/packages/Kdyby/Replicator)
-[![Latest stable](img.shields.io/packagist/v/Kdyby/Replicator.svg)](https://packagist.org/packages/Kdyby/Replicator)
+[![Latest stable](https://img.shields.io/packagist/v/Kdyby/Replicator.svg)](https://packagist.org/packages/Kdyby/Replicator)
 
 
 Requirements
