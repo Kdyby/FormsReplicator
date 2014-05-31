@@ -1,5 +1,9 @@
-Kdyby/Replicator [![Build Status](https://secure.travis-ci.org/Kdyby/Replicator.png?branch=master)](http://travis-ci.org/Kdyby/Replicator)
-===========================
+Kdyby/Replicator
+======
+
+[![Build Status](https://travis-ci.org/Kdyby/Replicator.svg?branch=nette-2.1)](https://travis-ci.org/Kdyby/Replicator)
+[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 
 
 Requirements
@@ -7,7 +11,7 @@ Requirements
 
 Kdyby/Replicator requires PHP 5.3.2 or higher.
 
-- [Nette Framework 2.0.x](https://github.com/nette/nette)
+- [Nette Framework](https://github.com/nette/nette)
 
 
 Installation
@@ -16,8 +20,14 @@ Installation
 The best way to install Kdyby/Replicator is using  [Composer](http://getcomposer.org/):
 
 ```sh
-$ composer require kdyby/forms-replicator:@dev
+$ composer require kdyby/forms-replicator:~1.1.0
 ```
+
+
+Documentation
+------------
+
+Lear more in the [documentation](https://github.com/Kdyby/Replicator/blob/nette-2.1/docs/en/index.md).
 
 
 -----
