@@ -27,7 +27,7 @@ $ composer require kdyby/forms-replicator:~1.1.0
 Documentation
 ------------
 
-Lear more in the [documentation](https://github.com/Kdyby/Replicator/blob/nette-2.1/docs/en/index.md).
+Learn more in the [documentation](https://github.com/Kdyby/Replicator/blob/nette-2.1/docs/en/index.md).
 
 
 -----
