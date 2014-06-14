@@ -27,7 +27,7 @@ $ composer require kdyby/forms-replicator:~1.1
 Documentation
 ------------
 
-Lear more in the [documentation](https://github.com/Kdyby/Replicator/blob/master/docs/en/index.md).
+Learn more in the [documentation](https://github.com/Kdyby/Replicator/blob/master/docs/en/index.md).
 
 
 -----
