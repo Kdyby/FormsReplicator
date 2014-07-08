@@ -9,8 +9,10 @@
  */
 
 namespace Kdyby\Replicator;
+
 use Nette;
 use Nette\Forms\Controls\SubmitButton;
+use Nette\Utils\Callback;
 
 
 
@@ -63,7 +65,7 @@ class Container extends Nette\Forms\Container
 		$this->monitor('Nette\Application\UI\Presenter');
 
 		try {
-			$this->factoryCallback = callback($factory);
+			$this->factoryCallback = Callback::closure($factory);
 		} catch (Nette\InvalidArgumentException $e) {
 			$type = is_object($factory) ? 'instanceof ' . get_class($factory) : gettype($factory);
 			throw new Nette\InvalidArgumentException(
@@ -82,7 +84,7 @@ class Container extends Nette\Forms\Container
 	 */
 	public function setFactory($factory)
 	{
-		$this->factoryCallback = callback($factory);
+		$this->factoryCallback = Callback::closure($factory);
 	}
 
 
@@ -140,7 +142,7 @@ class Container extends Nette\Forms\Container
 		$container->currentGroup = $this->currentGroup;
 		$this->addComponent($container, $name, $this->getFirstControlName());
 
-		$this->factoryCallback->invoke($container);
+		Callback::invoke($this->factoryCallback, $container);
 
 		return $this->created[$container->name] = $container;
 	}
@@ -519,7 +521,7 @@ class Container extends Nette\Forms\Container
 			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $callback) {
 				/** @var Container $replicator */
 				if (is_callable($callback)) {
-					callback($callback)->invoke($replicator, $button->parent);
+					Callback::invoke($callback, $replicator, $button->parent);
 				}
 				if ($form = $button->getForm(FALSE)) {
 					$form->onSuccess = array();
@@ -534,13 +536,13 @@ class Container extends Nette\Forms\Container
 			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $allowEmpty, $callback) {
 				/** @var Container $replicator */
 				if (!is_bool($allowEmpty)) {
-					$callback = callback($allowEmpty);
+					$callback = Callback::closure($allowEmpty);
 					$allowEmpty = FALSE;
 				}
 				if ($allowEmpty === TRUE || $replicator->isAllFilled() === TRUE) {
 					$newContainer = $replicator->createOne();
 					if (is_callable($callback)) {
-						callback($callback)->invoke($replicator, $newContainer);
+						Callback::invoke($callback, $replicator, $newContainer);
 					}
 				}
 				$button->getForm()->onSuccess = array();
