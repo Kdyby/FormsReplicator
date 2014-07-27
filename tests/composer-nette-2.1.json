@@ -21,16 +21,11 @@
 	},
 	"require-dev": {
 		"nette/tester": "@dev",
-		"jakub-onderka/php-parallel-lint": "~0.6"
+		"jakub-onderka/php-parallel-lint": "~0.7"
 	},
 	"autoload": {
 		"psr-0": {
 			"Kdyby\\Replicator\\": "src/"
-		}
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "1.0-dev"
 		}
 	}
 }
