@@ -111,7 +111,6 @@ class ContainerTest extends Tester\TestCase
 				2 => array('name' => 'Holy'),
 				3 => array('name' => 'Rimmer'),
 			),
-			'do' => 'form-submit'
 		));
 
 		// container and submit button
@@ -136,7 +135,6 @@ class ContainerTest extends Tester\TestCase
 				2 => array('name' => 'Holy'),
 				3 => array('name' => 'Rimmer'),
 			),
-			'do' => 'form-submit'
 		));
 
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
@@ -163,7 +161,7 @@ class ContainerTest extends Tester\TestCase
 		/** @var MockPresenter $presenter */
 		$presenter = $container->createInstance('KdybyTests\Replicator\MockPresenter', array('form' => $form));
 		$container->callInjects($presenter);
-		$presenter->run(new Request('Mock', $post ? 'POST' : 'GET', array('action' => 'default'), $post));
+		$presenter->run(new Request('Mock', $post ? 'POST' : 'GET', array('action' => 'default', 'do' => 'form-submit'), $post));
 
 		$presenter['form']; // connect form
 
