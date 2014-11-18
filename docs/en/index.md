@@ -81,7 +81,7 @@ public function FormSubmitted(Form $form)
 ```
 
 [WARNING]
-Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a "Multiple File [Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
+Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a [Multiple File Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
 
 
 Editation of items
