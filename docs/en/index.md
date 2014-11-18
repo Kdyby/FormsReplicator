@@ -77,7 +77,7 @@ public function FormSubmitted(Form $form)
 			dump($address['city']);
 		}
 	}
-
+}
 ```
 
 [WARNING]
@@ -141,6 +141,7 @@ protected function createComponentMyForm()
 		->onClick[] = callback($this, 'MyFormAddElementClicked');
 
 	// ...
+}
 ```
 
 Handlig of add button is easy. Next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
