@@ -14,7 +14,14 @@ The best way to install Kdyby/Replicator is using  [Composer](http://getcomposer
 $ composer require kdyby/forms-replicator:@dev
 ```
 
-Place the Replicator class to folder, where RobotLoader can find it and add following line to `app/boostrap.php` or to `BasePresenter::startup()`.
+Now you have to enable the extension using your neon config
+
+```yml
+extensions:
+	replicator: Kdyby\Replicator\DI\ReplicatorExtension
+```
+
+Or place the Replicator class to folder, where RobotLoader can find it and add following line to `app/boostrap.php` or to `BasePresenter::startup()`.
 
 ```php
 Kdyby\Replicator\Container::register();
@@ -30,7 +37,7 @@ It can be used for simple things, for example list of dates
 use Nette\Forms\Container;
 
 $form->addDynamic('dates', function (Container $container) {
-        $container->addDate('date');
+		$container->addDate('date');
 });
 ```
 
@@ -38,19 +45,19 @@ Or complex combinations, for example users and their addresses
 
 ```php
 $form->addDynamic('users', function (Container $user) {
-        $user->addText('name', 'Name');
-        $user->addText('surname', 'surbame');
-        $user->addDynamic('addresses', function (Container $address) {
-                $address->addText('street', 'Street');
-                $address->addText('city', 'City');
-                $address->addText('zip', 'Zip');
-                // ...
-        }, 1);
-        // ...
+		$user->addText('name', 'Name');
+		$user->addText('surname', 'surbame');
+		$user->addDynamic('addresses', function (Container $address) {
+				$address->addText('street', 'Street');
+				$address->addText('city', 'City');
+				$address->addText('zip', 'Zip');
+				// ...
+		}, 1);
+		// ...
 }, 2);
 ```
 
-There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in "a934a07":https://github.com/Kdyby/Framework/commit/a934a07 that won't let you have less ten default count of containers in replicator.
+There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in [a934a07](https://github.com/foxycode/Replicator/blob/master/src/Kdyby/Replicator/Container.php#L62) that won't let you have less than default count of containers in replicator.
 
 
 Handling
@@ -70,28 +77,28 @@ public function FormSubmitted(Form $form)
 			dump($address['city']);
 		}
 	}
-
+}
 ```
 
-.[warning]
-Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a "Multiple File Upload" component instead.
+[WARNING]
+Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a [Multiple File Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
 
 
 Editation of items
 ------------------
 
-You can use names of nested containers as identificators. From the nature of form containers, you can work with the like this
+You can use names of nested containers as identifiers. From the nature of form containers, you can work with them like this:
 
 ```php
 public function actionEditUsers()
 {
 	$form = $this['myForm'];
-	if (!$form->isSubmitted()) { # if form was not submitted
-		# expects instance of model class in presenter
+	if (!$form->isSubmitted()) { // if form was not submitted
+		// expects instance of model class in presenter
 		$users = $this->model->findAll();
 		foreach ($users as $user) {
 			$form['users'][$user->id]->setValues($user);
-			# fill the container with default values
+			// fill the container with default values
 		}
 	}
 }
@@ -103,8 +110,9 @@ And modify the handling
 public function FormSubmitted(Form $form)
 {
 	foreach ($form['users']->values as $userId => $user) {
-	# now we have asscesible ID of the user and associated values from the container
-	// ...
+		// now we have asscesible ID of the user and associated values from the container
+	}
+}
 ```
 
 
@@ -133,12 +141,13 @@ protected function createComponentMyForm()
 		->onClick[] = callback($this, 'MyFormAddElementClicked');
 
 	// ...
+}
 ```
 
-Handlig of add button is easy, next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
+Handlig of add button is easy. Next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
 
 ```php
-use use Nette\Forms\Controls\SubmitButton;
+use Nette\Forms\Controls\SubmitButton;
 
 public function MyFormAddElementClicked(SubmitButton $button)
 {
@@ -163,7 +172,7 @@ public function MyFormAddElementClicked(SubmitButton $button)
 
 Method `Replicator::isAllFilled()` checks, if the form controls are not empty. It's argument says which ones not to check.
 
-When the user clicks for delete, the following event will be invoked
+When the user clicks to delete, the following event will be invoked
 
 ```php
 public function MyFormRemoveElementClicked(SubmitButton $button)
@@ -175,19 +184,20 @@ public function MyFormRemoveElementClicked(SubmitButton $button)
 }
 ```
 
-If I'd want to for example delete user also frm database and I have container names as idenficators, the I can read the value like this
+If I'd want to for example delete user also from database and I have container names as identifiers, then I can read the value like this:
 
 ```php
-public function MyFormRemoveElementClicked(Submi vltButton $button)
+public function MyFormRemoveElementClicked(SubmitButton $button)
 {
 	$id = $button->parent->name;
+}
 ```
 
 
 Manual rendering
 ----------------
 
-When you add a submit button to replicator, you certainly don't want to try it render as container, so for skipping them, there is a method `getContainers()`, that will return only existing [containers | doc:/en/forms#toc-addcontainer].
+When you add a submit button to replicator, you certainly don't want to try it render as container, so for skipping them, there is a method `getContainers()`, that will return only existing [containers](doc:/en/forms#toc-addcontainer).
 
 ```html
 {form myForm}
@@ -210,4 +220,3 @@ Or with form macros
 {/foreach}
 {/form}
 ```
-
