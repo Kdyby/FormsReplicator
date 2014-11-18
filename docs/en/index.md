@@ -57,7 +57,7 @@ $form->addDynamic('users', function (Container $user) {
 }, 2);
 ```
 
-There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in "a934a07":https://github.com/foxycode/Replicator/blob/master/src/Kdyby/Replicator/Container.php#L62 that won't let you have less than default count of containers in replicator.
+There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in [a934a07](https://github.com/foxycode/Replicator/blob/master/src/Kdyby/Replicator/Container.php#L62) that won't let you have less than default count of containers in replicator.
 
 
 Handling
@@ -81,7 +81,7 @@ public function FormSubmitted(Form $form)
 ```
 
 [WARNING]
-Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a "Multiple File Upload":http://addons.nette.org/jkuchar/multiplefileupload component instead.
+Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a "Multiple File [Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
 
 
 Editation of items
@@ -197,7 +197,7 @@ public function MyFormRemoveElementClicked(SubmitButton $button)
 Manual rendering
 ----------------
 
-When you add a submit button to replicator, you certainly don't want to try it render as container, so for skipping them, there is a method `getContainers()`, that will return only existing [containers | doc:/en/forms#toc-addcontainer].
+When you add a submit button to replicator, you certainly don't want to try it render as container, so for skipping them, there is a method `getContainers()`, that will return only existing [containers](doc:/en/forms#toc-addcontainer).
 
 ```html
 {form myForm}
