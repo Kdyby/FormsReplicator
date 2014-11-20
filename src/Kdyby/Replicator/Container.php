@@ -516,9 +516,9 @@ class Container extends Nette\Forms\Container
 		}
 
 		SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
-			$replicator = $_this->lookup(__NAMESPACE__ . '\Container');
 			$_this->setValidationScope(FALSE);
-			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $callback) {
+			$_this->onClick[] = function (SubmitButton $button) use ($callback) {
+				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
 				/** @var Container $replicator */
 				if (is_callable($callback)) {
 					Callback::invoke($callback, $replicator, $button->parent);
@@ -532,8 +532,8 @@ class Container extends Nette\Forms\Container
 		});
 
 		SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
-			$replicator = $_this->lookup(__NAMESPACE__ . '\Container');
-			$_this->onClick[] = function (SubmitButton $button) use ($replicator, $allowEmpty, $callback) {
+			$_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
+				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
 				/** @var Container $replicator */
 				if (!is_bool($allowEmpty)) {
 					$callback = Callback::closure($allowEmpty);
