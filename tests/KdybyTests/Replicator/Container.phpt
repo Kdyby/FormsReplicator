@@ -156,6 +156,44 @@ class ContainerTest extends Tester\TestCase
 
 
 
+	public function testSubmit_nestedReplicator_notFilled()
+	{
+		$form = new BaseForm();
+		$this->connectForm($form, array(
+			'users' => array(0 => array('emails' => array(0 => array('email' => '')))),
+		    'do' => 'form-submit',
+		));
+		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
+			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
+				$email->addText('email');
+				$email->addText('note');
+			});
+		});
+		$users->addSubmit('add')->addCreateOnClick();
+		Assert::false($users->isAllFilled());
+	}
+
+
+
+	public function testSubmit_nestedReplicator_filled()
+	{
+		$form = new BaseForm();
+		$this->connectForm($form, array(
+			'users' => array(0 => array('emails' => array(0 => array('email' => 'foo')))),
+		    'do' => 'form-submit',
+		));
+		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
+			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
+				$email->addText('email');
+				$email->addText('note');
+			});
+		});
+		$users->addSubmit('add')->addCreateOnClick();
+		Assert::true($users->isAllFilled());
+	}
+
+
+
 	protected function connectForm(UI\Form $form, array $post = array())
 	{
 		$container = $this->createContainer();
