@@ -18,7 +18,7 @@ matrix:
 before_script:
   - "php tests/prepare-composer.php"
   - composer self-update
-  - composer install --no-interaction --prefer-source --dev
+  - composer install --no-interaction --prefer-source
   - ./vendor/bin/parallel-lint -e php,phpt --exclude vendor .
 
 script: ./vendor/bin/tester -c ./tests/php.ini-unix ./tests/KdybyTests/
