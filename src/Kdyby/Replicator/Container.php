@@ -209,7 +209,7 @@ class Container extends Nette\Forms\Container
 			$name = $names ? max($names) + 1 : 0;
 		}
 
-		// Container is overriden, therefore every request for getComponent($name, FALSE) would return container
+		// Container is overridden, therefore every request for getComponent($name, FALSE) would return container
 		if (isset($this->created[$name])) {
 			throw new Nette\InvalidArgumentException("Container with name '$name' already exists.");
 		}
