@@ -159,11 +159,9 @@ class Container extends Nette\Forms\Container
 
 
 	/**
-	 * @param string $name
-	 *
 	 * @return \Nette\Forms\Container
 	 */
-	protected function createContainer($name)
+	protected function createContainer()
 	{
 		$class = $this->containerClass;
 		return new $class();
