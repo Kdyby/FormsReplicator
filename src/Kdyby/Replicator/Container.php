@@ -44,9 +44,6 @@ class Container extends Nette\Forms\Container
 	/** @var array */
 	private $created = array();
 
-	/** @var \Nette\Http\IRequest */
-	private $httpRequest;
-
 	/** @var array */
 	private $httpPost;
 
@@ -306,33 +303,6 @@ class Container extends Nette\Forms\Container
 		}
 
 		return $this->httpPost;
-	}
-
-
-
-	/**
-	 * @internal
-	 * @param \Nette\Application\Request $request
-	 * @return Container
-	 */
-	public function setRequest(Nette\Application\Request $request)
-	{
-		$this->httpRequest = $request;
-		return $this;
-	}
-
-
-
-	/**
-	 * @return \Nette\Application\Request
-	 */
-	private function getRequest()
-	{
-		if ($this->httpRequest !== NULL) {
-			return $this->httpRequest;
-		}
-
-		return $this->httpRequest = $this->getForm()->getPresenter()->getRequest();
 	}
 
 
