@@ -4,6 +4,7 @@ Kdyby/Replicator
 [![Build Status](https://travis-ci.org/Kdyby/Replicator.svg?branch=master)](https://travis-ci.org/Kdyby/Replicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Join the chat at https://gitter.im/Kdyby/Help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kdyby/Help)
 
 
 Save me please!
