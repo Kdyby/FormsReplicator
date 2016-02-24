@@ -222,6 +222,12 @@ class ContainerTest extends Tester\TestCase
 		return $config->createContainer();
 	}
 
+
+	// TODO: add tests using standalone \Nette\Forms\Form and not the UI\Form.
+	// https://github.com/Kdyby/Replicator/issues/40
+	// The Replicator can't be used with standalone \Nette\Forms\Form (so without the UI\Form).
+	// Problem is that attached is not triggered, so values from Request are not populated to the container.
+
 }
 
 
