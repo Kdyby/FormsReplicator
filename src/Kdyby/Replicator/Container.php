@@ -63,6 +63,7 @@ class Container extends Nette\Forms\Container
 	{
 		parent::__construct();
 		$this->monitor('Nette\Application\UI\Presenter');
+		$this->monitor('Nette\Forms\Form');
 
 		try {
 			$this->factoryCallback = Callback::closure($factory);
@@ -98,7 +99,11 @@ class Container extends Nette\Forms\Container
 	{
 		parent::attached($obj);
 
-		if (!$obj instanceof Nette\Application\UI\Presenter) {
+		if (
+			!$obj instanceof Nette\Application\UI\Presenter
+			&&
+			$this->form instanceof Nette\Application\UI\Form
+		) {
 			return;
 		}
 
