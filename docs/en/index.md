@@ -97,7 +97,7 @@ public function actionEditUsers()
 		// expects instance of model class in presenter
 		$users = $this->model->findAll();
 		foreach ($users as $user) {
-			$form['users'][$user->id]->setValues($user);
+			$form['users'][$user->id]->setDefaults($user);
 			// fill the container with default values
 		}
 	}
@@ -144,7 +144,7 @@ protected function createComponentMyForm()
 }
 ```
 
-Handlig of add button is easy. Next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
+Handling of add button is easy. Next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
 
 ```php
 use Nette\Forms\Controls\SubmitButton;
