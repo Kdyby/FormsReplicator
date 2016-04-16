@@ -26,7 +26,7 @@ class ReplicatorExtension extends Nette\DI\CompilerExtension
 	{
 		parent::afterCompile($class);
 
-		$init = $class->methods['initialize'];
+		$init = $class->getMethod('initialize');
 		$init->addBody('Kdyby\Replicator\Container::register();');
 	}
 

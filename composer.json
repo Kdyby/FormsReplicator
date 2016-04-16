@@ -17,9 +17,11 @@
 		"issues": "https://github.com/kdyby/replicator/issues"
 	},
 	"require": {
-		"nette/forms": "~2.2@dev"
+		"nette/forms": "~2.4"
 	},
 	"require-dev": {
+		"php": ">= 5.4",
+
 		"nette/application": "~2.2@dev",
 		"nette/bootstrap": "~2.2@dev",
 		"nette/caching": "~2.2@dev",
