@@ -12,16 +12,26 @@ php:
   - hhvm
 
 matrix:
+  include:
+    - php: 7.0
+      env: NETTE=nette-2.2 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
   allow_failures:
     - php: hhvm
+    - php: 7.0
+      env: NETTE=nette-2.2 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
 
 before_script:
   - "php tests/prepare-composer.php"
   - composer self-update
   - composer install --no-interaction --prefer-source
   - ./vendor/bin/parallel-lint -e php,phpt --exclude vendor .
+  - travis_retry wget -O /tmp/coveralls.phar https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
 
-script: ./vendor/bin/tester -c ./tests/php.ini-unix ./tests/KdybyTests/
+script:
+  - vendor/bin/tester $COVERAGE -s -p ${TESTER_RUNTIME:-php} -c ./tests/php.ini-unix ./tests/KdybyTests/
+
+after_script:
+  - if [ "$COVERAGE" != "" ]; then php /tmp/coveralls.phar --verbose --config tests/.coveralls.yml || true; fi
 
 after_failure:
   - 'for i in $(find ./tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done'
