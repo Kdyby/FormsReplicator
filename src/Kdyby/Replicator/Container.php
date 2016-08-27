@@ -47,7 +47,7 @@ class Container extends Nette\Forms\Container
 	/** @var \Nette\Http\IRequest */
 	private $httpRequest;
 
-	/** @var array */
+	/** @var array|null */
 	private $httpPost;
 
 
@@ -102,7 +102,7 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		$this->loadHttpData();
+		$this->createByHttpData();
 		$this->createDefault();
 	}
 
@@ -244,9 +244,9 @@ class Container extends Nette\Forms\Container
 	 * Loads data received from POST
 	 * @internal
 	 */
-	protected function loadHttpData()
+	protected function createByHttpData()
 	{
-		if (!$this->getForm()->isSubmitted()) {
+		if (!$this->isFormSubmitted()) {
 			return;
 		}
 
@@ -269,7 +269,7 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		if (!$this->getForm()->isSubmitted()) {
+		if (!$this->isFormSubmitted()) {
 			foreach (range(0, $this->createDefault - 1) as $key) {
 				$this->createOne($key);
 			}
@@ -296,13 +296,34 @@ class Container extends Nette\Forms\Container
 
 
 	/**
-	 * @return mixed|NULL
+	 * @return array|null
 	 */
 	private function getHttpData()
 	{
 		if ($this->httpPost === NULL) {
+			// Copied from Nette\Forms\Form, because method receiveHttpData() is protected
+			$httpRequest = $this->getRequest();
+			if (strcasecmp($this->getForm()->getMethod(), $httpRequest->getMethod())) {
+				return;
+			}
+
+			if ($httpRequest->isMethod('post')) {
+				$data = Nette\Utils\Arrays::mergeTree($httpRequest->getPost(), $httpRequest->getFiles());
+			} else {
+				$data = $httpRequest->getQuery();
+				if (!$data) {
+					return;
+				}
+			}
+
+			if ($tracker = $this->getForm()->getComponent(Nette\Forms\Form::TRACKER_ID, FALSE)) {
+				if (!isset($data[Nette\Forms\Form::TRACKER_ID]) || $data[Nette\Forms\Form::TRACKER_ID] !== $tracker->getValue()) {
+					return;
+				}
+			}
+
 			$path = explode(self::NAME_SEPARATOR, $this->lookupPath('Nette\Forms\Form'));
-			$this->httpPost = Nette\Utils\Arrays::get($this->getForm()->getHttpData(), $path, NULL);
+			$this->httpPost = Nette\Utils\Arrays::get($data, $path, NULL);
 		}
 
 		return $this->httpPost;
@@ -333,6 +354,16 @@ class Container extends Nette\Forms\Container
 		}
 
 		return $this->httpRequest = $this->getForm()->getPresenter()->getRequest();
+	}
+
+
+
+	/**
+	 * @return boolean
+	 */
+	private function isFormSubmitted()
+	{
+		return $this->getHttpData() !== null;
 	}
 
 
@@ -501,12 +532,12 @@ class Container extends Nette\Forms\Container
 	public static function register($methodName = 'addDynamic')
 	{
 		if (self::$registered) {
-			Nette\Forms\Container::extensionMethod(self::$registered, function () {
+			Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', self::$registered, function () {
 				throw new Nette\MemberAccessException;
 			});
 		}
 
-		Nette\Forms\Container::extensionMethod($methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', $methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
 			$control = new Container($factory, $createDefault, $forceDefault);
 			$control->currentGroup = $_this->currentGroup;
 			return $_this[$name] = $control;
@@ -516,7 +547,7 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Controls\SubmitButton', 'addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
 			$_this->setValidationScope(FALSE);
 			$_this->onClick[] = function (SubmitButton $button) use ($callback) {
 				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
@@ -532,7 +563,7 @@ class Container extends Nette\Forms\Container
 			return $_this;
 		});
 
-		SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Controls\SubmitButton', 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
 			$_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
 				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
 				/** @var Container $replicator */
