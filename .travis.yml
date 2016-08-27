@@ -1,5 +1,11 @@
 language: php
 
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
 env:
   - NETTE=nette-2.2-dev
   - NETTE=nette-2.2
