@@ -7,8 +7,8 @@ cache:
         - $HOME/.composer/cache
 
 env:
-  - NETTE=nette-2.2-dev
-  - NETTE=nette-2.2
+  - NETTE=nette-2.3-dev
+  - NETTE=nette-2.3
 
 php:
   - 5.4
@@ -20,11 +20,11 @@ php:
 matrix:
   include:
     - php: 7.0
-      env: NETTE=nette-2.2 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
+      env: NETTE=nette-2.3 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
   allow_failures:
     - php: hhvm
     - php: 7.0
-      env: NETTE=nette-2.2 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
+      env: NETTE=nette-2.3 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
 
 before_install:
   - travis_retry composer self-update
