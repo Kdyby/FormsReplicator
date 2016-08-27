@@ -1,4 +1,4 @@
-Kdyby/Replicator
+Kdyby/FormsReplicator
 ======
 
 [![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=nette-2.2)](https://travis-ci.org/Kdyby/FormsReplicator)
@@ -29,7 +29,7 @@ Kdyby/Replicator requires PHP 5.3.2 or higher.
 Installation
 ------------
 
-The best way to install Kdyby/Replicator is using  [Composer](http://getcomposer.org/):
+The best way to install Kdyby/FormsReplicator is using  [Composer](http://getcomposer.org/):
 
 ```sh
 $ composer require kdyby/forms-replicator:~1.1
@@ -39,9 +39,9 @@ $ composer require kdyby/forms-replicator:~1.1
 Documentation
 ------------
 
-Learn more in the [documentation](https://github.com/Kdyby/Replicator/blob/master/docs/en/index.md).
+Learn more in the [documentation](https://github.com/Kdyby/FormsReplicator/blob/master/docs/en/index.md).
 
 
 -----
 
-Homepage [http://www.kdyby.org](http://www.kdyby.org) and repository [http://github.com/kdyby/Replicator](http://github.com/kdyby/Replicator).
+Homepage [http://www.kdyby.org](http://www.kdyby.org) and repository [http://github.com/kdyby/FormsReplicator](http://github.com/kdyby/FormsReplicator).
