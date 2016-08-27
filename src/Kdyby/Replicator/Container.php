@@ -42,7 +42,7 @@ class Container extends Nette\Forms\Container
 	private $submittedBy = FALSE;
 
 	/** @var array */
-	private $created = array();
+	private $created = [];
 
 	/** @var \Nette\Http\IRequest */
 	private $httpRequest;
@@ -369,7 +369,7 @@ class Container extends Nette\Forms\Container
 		$controlsProperty->setAccessible(TRUE);
 
 		// walk groups and clean then from removed components
-		$affected = array();
+		$affected = [];
 		foreach ($this->getForm()->getGroups() as $group) {
 			/** @var \SplObjectStorage $groupControls */
 			$groupControls = $controlsProperty->getValue($group);
@@ -411,7 +411,7 @@ class Container extends Nette\Forms\Container
 	 * @param array $subComponents
 	 * @return int
 	 */
-	public function countFilledWithout(array $components = array(), array $subComponents = array())
+	public function countFilledWithout(array $components = [], array $subComponents = [])
 	{
 		$httpData = array_diff_key((array)$this->getHttpData(), array_flip($components));
 
@@ -419,7 +419,7 @@ class Container extends Nette\Forms\Container
 			return 0;
 		}
 
-		$rows = array();
+		$rows = [];
 		$subComponents = array_flip($subComponents);
 		foreach ($httpData as $item) {
 			$filter = function ($value) use (&$filter) {
@@ -440,9 +440,9 @@ class Container extends Nette\Forms\Container
 	 * @param array $exceptChildren
 	 * @return bool
 	 */
-	public function isAllFilled(array $exceptChildren = array())
+	public function isAllFilled(array $exceptChildren = [])
 	{
-		$components = array();
+		$components = [];
 		foreach ($this->getComponents(FALSE, 'Nette\Forms\IControl') as $control) {
 			/** @var \Nette\Forms\Controls\BaseControl $control */
 			$components[] = $control->getName();
@@ -525,7 +525,7 @@ class Container extends Nette\Forms\Container
 					Callback::invoke($callback, $replicator, $button->parent);
 				}
 				if ($form = $button->getForm(FALSE)) {
-					$form->onSuccess = array();
+					$form->onSuccess = [];
 				}
 				$replicator->remove($button->parent);
 			};
@@ -546,7 +546,7 @@ class Container extends Nette\Forms\Container
 						Callback::invoke($callback, $replicator, $newContainer);
 					}
 				}
-				$button->getForm()->onSuccess = array();
+				$button->getForm()->onSuccess = [];
 			};
 			return $_this;
 		});

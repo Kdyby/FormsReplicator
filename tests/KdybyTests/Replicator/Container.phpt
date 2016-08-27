@@ -61,10 +61,10 @@ class ContainerTest extends Tester\TestCase
 		// 2 containers and submit button
 		Assert::same(3, iterator_count($users->getComponents()));
 
-		Assert::same(array('users' => array(
-			0 => array('name' => ''),
-			2 => array('name' => ''),
-		)), $form->getValues(TRUE));
+		Assert::same(['users' => [
+			0 => ['name' => ''],
+			2 => ['name' => ''],
+		]], $form->getValues(TRUE));
 	}
 
 
@@ -89,10 +89,10 @@ class ContainerTest extends Tester\TestCase
 		// 2 containers and submit button
 		Assert::same(3, iterator_count($users->getComponents()));
 
-		Assert::same(array('users' => array(
-			0 => array('name' => ''),
-			2 => array('name' => ''),
-		)), $form->getValues(TRUE));
+		Assert::same(['users' => [
+			0 => ['name' => ''],
+			2 => ['name' => ''],
+		]], $form->getValues(TRUE));
 	}
 
 
@@ -105,23 +105,23 @@ class ContainerTest extends Tester\TestCase
 		}, 1);
 		$users->addSubmit('add');
 
-		$this->connectForm($form, array(
-			'users' => array(
-				0 => array('name' => 'David'),
-				2 => array('name' => 'Holy'),
-				3 => array('name' => 'Rimmer'),
-			),
+		$this->connectForm($form, [
+			'users' => [
+				0 => ['name' => 'David'],
+				2 => ['name' => 'Holy'],
+				3 => ['name' => 'Rimmer'],
+			],
 			'do' => 'form-submit'
-		));
+		]);
 
 		// container and submit button
 		Assert::same(4, iterator_count($users->getComponents()));
 
-		Assert::same(array('users' => array(
-			0 => array('name' => 'David'),
-			2 => array('name' => 'Holy'),
-			3 => array('name' => 'Rimmer'),
-		)), $form->getValues(TRUE));
+		Assert::same(['users' => [
+			0 => ['name' => 'David'],
+			2 => ['name' => 'Holy'],
+			3 => ['name' => 'Rimmer'],
+		]], $form->getValues(TRUE));
 	}
 
 
@@ -130,14 +130,14 @@ class ContainerTest extends Tester\TestCase
 	{
 		$form = new BaseForm();
 
-		$this->connectForm($form, array(
-			'users' => array(
-				0 => array('name' => 'David'),
-				2 => array('name' => 'Holy'),
-				3 => array('name' => 'Rimmer'),
-			),
+		$this->connectForm($form, [
+			'users' => [
+				0 => ['name' => 'David'],
+				2 => ['name' => 'Holy'],
+				3 => ['name' => 'Rimmer'],
+			],
 			'do' => 'form-submit'
-		));
+		]);
 
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addText('name');
@@ -147,11 +147,11 @@ class ContainerTest extends Tester\TestCase
 		// container and submit button
 		Assert::same(4, iterator_count($users->getComponents()));
 
-		Assert::same(array('users' => array(
-			0 => array('name' => 'David'),
-			2 => array('name' => 'Holy'),
-			3 => array('name' => 'Rimmer'),
-		)), $form->getValues(TRUE));
+		Assert::same(['users' => [
+			0 => ['name' => 'David'],
+			2 => ['name' => 'Holy'],
+			3 => ['name' => 'Rimmer'],
+		]], $form->getValues(TRUE));
 	}
 
 
@@ -159,10 +159,10 @@ class ContainerTest extends Tester\TestCase
 	public function testSubmit_nestedReplicator_notFilled()
 	{
 		$form = new BaseForm();
-		$this->connectForm($form, array(
-			'users' => array(0 => array('emails' => array(0 => array('email' => '')))),
-		    'do' => 'form-submit',
-		));
+		$this->connectForm($form, [
+			'users' => [0 => ['emails' => [0 => ['email' => '']]]],
+			'do' => 'form-submit',
+		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
 				$email->addText('email');
@@ -178,10 +178,10 @@ class ContainerTest extends Tester\TestCase
 	public function testSubmit_nestedReplicator_filled()
 	{
 		$form = new BaseForm();
-		$this->connectForm($form, array(
-			'users' => array(0 => array('emails' => array(0 => array('email' => 'foo')))),
+		$this->connectForm($form, [
+			'users' => [0 => ['emails' => [0 => ['email' => 'foo']]]],
 		    'do' => 'form-submit',
-		));
+		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
 				$email->addText('email');
@@ -194,14 +194,14 @@ class ContainerTest extends Tester\TestCase
 
 
 
-	protected function connectForm(UI\Form $form, array $post = array())
+	protected function connectForm(UI\Form $form, array $post = [])
 	{
 		$container = $this->createContainer();
 
 		/** @var MockPresenter $presenter */
-		$presenter = $container->createInstance('KdybyTests\Replicator\MockPresenter', array('form' => $form));
+		$presenter = $container->createInstance('KdybyTests\Replicator\MockPresenter', ['form' => $form]);
 		$container->callInjects($presenter);
-		$presenter->run(new Request('Mock', $post ? 'POST' : 'GET', array('action' => 'default'), $post));
+		$presenter->run(new Request('Mock', $post ? 'POST' : 'GET', ['action' => 'default'], $post));
 
 		$presenter['form']; // connect form
 
