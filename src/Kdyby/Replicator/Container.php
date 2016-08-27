@@ -506,12 +506,12 @@ class Container extends Nette\Forms\Container
 	public static function register($methodName = 'addDynamic')
 	{
 		if (self::$registered) {
-			Nette\Utils\ObjectMixin::setExtensionMethod(Nette\Forms\Container::class, self::$registered, function () {
+			Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', self::$registered, function () {
 				throw new Nette\MemberAccessException;
 			});
 		}
 
-		Nette\Utils\ObjectMixin::setExtensionMethod(Nette\Forms\Container::class, $methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', $methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
 			$control = new Container($factory, $createDefault, $forceDefault);
 			$control->currentGroup = $_this->currentGroup;
 			return $_this[$name] = $control;
@@ -521,7 +521,7 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		Nette\Utils\ObjectMixin::setExtensionMethod(SubmitButton::class, 'addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Controls\SubmitButton', 'addRemoveOnClick', function (SubmitButton $_this, $callback = NULL) {
 			$_this->setValidationScope(FALSE);
 			$_this->onClick[] = function (SubmitButton $button) use ($callback) {
 				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
@@ -537,7 +537,7 @@ class Container extends Nette\Forms\Container
 			return $_this;
 		});
 
-		Nette\Utils\ObjectMixin::setExtensionMethod(SubmitButton::class, 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Controls\SubmitButton', 'addCreateOnClick', function (SubmitButton $_this, $allowEmpty = FALSE, $callback = NULL) {
 			$_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
 				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
 				/** @var Container $replicator */
