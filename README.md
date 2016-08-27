@@ -1,10 +1,10 @@
 Kdyby/FormsReplicator
 ======
 
-[![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=master)](https://travis-ci.org/Kdyby/FormsReplicator)
+[![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=nette-2.3)](https://travis-ci.org/Kdyby/FormsReplicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=master)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=nette-2.3)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=nette-2.3)
 [![Join the chat at https://gitter.im/Kdyby/Help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kdyby/Help)
 
 
@@ -21,7 +21,7 @@ If you need something like this and you're willing to join in, you're welcome to
 Requirements
 ------------
 
-Kdyby/Replicator requires PHP 5.3.2 or higher.
+Kdyby/FormsReplicator requires PHP 5.3.2 or higher.
 
 - [Nette Framework](https://github.com/nette/nette)
 
@@ -39,7 +39,7 @@ $ composer require kdyby/forms-replicator:~1.1
 Documentation
 ------------
 
-Learn more in the [documentation](https://github.com/Kdyby/FormsReplicator/blob/master/docs/en/index.md).
+Learn more in the [documentation](https://github.com/Kdyby/FormsReplicator/blob/nette-2.3/docs/en/index.md).
 
 
 -----
