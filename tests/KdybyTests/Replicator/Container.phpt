@@ -180,7 +180,7 @@ class ContainerTest extends Tester\TestCase
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [0 => ['emails' => [0 => ['email' => 'foo']]]],
-		    'do' => 'form-submit',
+			'do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
