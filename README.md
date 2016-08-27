@@ -1,7 +1,7 @@
 Kdyby/Replicator
 ======
 
-[![Build Status](https://travis-ci.org/Kdyby/Replicator.svg?branch=nette-2.2)](https://travis-ci.org/Kdyby/Replicator)
+[![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=nette-2.2)](https://travis-ci.org/Kdyby/FormsReplicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=nette-2.2)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=nette-2.2)
