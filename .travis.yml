@@ -1,11 +1,10 @@
 language: php
 
 env:
-  - NETTE=default # 2.2 dev
+  - NETTE=nette-2.2-dev
   - NETTE=nette-2.2
 
 php:
-  - 5.3.3
   - 5.4
   - 5.5
   - 5.6
@@ -20,15 +19,21 @@ matrix:
     - php: 7.0
       env: NETTE=nette-2.2 COVERAGE="--coverage ./coverage.xml --coverage-src ./src" TESTER_RUNTIME="phpdbg"
 
-before_script:
-  - "php tests/prepare-composer.php"
-  - composer self-update
-  - composer install --no-interaction --prefer-source
-  - ./vendor/bin/parallel-lint -e php,phpt --exclude vendor .
+before_install:
+  - travis_retry composer self-update
+  - wget -O /tmp/composer-nette https://raw.githubusercontent.com/Kdyby/TesterExtras/master/bin/composer-nette.php
+  - php /tmp/composer-nette
+
+install:
+  - travis_retry composer update --no-interaction --prefer-dist $COMPOSER_EXTRA_ARGS
+  - travis_retry composer create-project --no-interaction jakub-onderka/php-parallel-lint /tmp/php-parallel-lint
+  - travis_retry composer create-project --no-interaction kdyby/code-checker /tmp/code-checker
   - travis_retry wget -O /tmp/coveralls.phar https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
 
 script:
   - vendor/bin/tester $COVERAGE -s -p ${TESTER_RUNTIME:-php} -c ./tests/php.ini-unix ./tests/KdybyTests/
+  - php /tmp/php-parallel-lint/parallel-lint.php -e php,phpt --exclude vendor .
+  - php /tmp/code-checker/src/code-checker.php
 
 after_script:
   - if [ "$COVERAGE" != "" ]; then php /tmp/coveralls.phar --verbose --config tests/.coveralls.yml || true; fi
