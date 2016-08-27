@@ -4,6 +4,7 @@ Kdyby/FormsReplicator
 [![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=master)](https://travis-ci.org/Kdyby/FormsReplicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=master)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=master)
 [![Join the chat at https://gitter.im/Kdyby/Help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kdyby/Help)
 
 
