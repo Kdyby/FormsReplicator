@@ -21,7 +21,7 @@ If you need something like this and you're willing to join in, you're welcome to
 Requirements
 ------------
 
-Kdyby/Replicator requires PHP 5.3.2 or higher.
+Kdyby/FormsReplicator requires PHP 5.5 or higher.
 
 - [Nette Framework](https://github.com/nette/nette)
 
