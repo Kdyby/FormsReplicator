@@ -201,7 +201,7 @@ When you add a submit button to replicator, you certainly don't want to try it r
 
 ```html
 {form myForm}
-{foreach $form['users']->containers as $user}
+{foreach $form['users']->getContainers() as $user}
 
 	{$user['name']->control} {$user['name']->label}
 
@@ -213,7 +213,7 @@ Or with form macros
 
 ```html
 {form myForm}
-{foreach $form['users']->containers as $id => $user}
+{foreach $form['users']->getContainers() as $id => $user}
 
 	{input users-$id-name} {label users-$id-name /}
 
