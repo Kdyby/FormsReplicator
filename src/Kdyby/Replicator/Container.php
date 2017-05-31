@@ -44,9 +44,6 @@ class Container extends Nette\Forms\Container
 	/** @var array */
 	private $created = [];
 
-	/** @var \Nette\Http\IRequest */
-	private $httpRequest;
-
 	/** @var array */
 	private $httpPost;
 
@@ -167,11 +164,9 @@ class Container extends Nette\Forms\Container
 
 
 	/**
-	 * @param string $name
-	 *
 	 * @return \Nette\Forms\Container
 	 */
-	protected function createContainer($name)
+	protected function createContainer()
 	{
 		$class = $this->containerClass;
 		return new $class();
@@ -214,7 +209,7 @@ class Container extends Nette\Forms\Container
 			$name = $names ? max($names) + 1 : 0;
 		}
 
-		// Container is overriden, therefore every request for getComponent($name, FALSE) would return container
+		// Container is overridden, therefore every request for getComponent($name, FALSE) would return container
 		if (isset($this->created[$name])) {
 			throw new Nette\InvalidArgumentException("Container with name '$name' already exists.");
 		}
@@ -232,11 +227,9 @@ class Container extends Nette\Forms\Container
 	 */
 	public function setValues($values, $erase = FALSE, $onlyDisabled = FALSE)
 	{
-		if (!$this->form->isAnchored() || !$this->form->isSubmitted()) {
-			foreach ($values as $name => $value) {
-				if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
-					$this->createOne($name);
-				}
+		foreach ($values as $name => $value) {
+			if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
+				$this->createOne($name);
 			}
 		}
 
@@ -255,11 +248,7 @@ class Container extends Nette\Forms\Container
 			return;
 		}
 
-		foreach ((array) $this->getHttpData() as $name => $value) {
-			if ((is_array($value) || $value instanceof \Traversable) && !$this->getComponent($name, FALSE)) {
-				$this->createOne($name);
-			}
-		}
+		$this->setValues((array) $this->getHttpData());
 	}
 
 
@@ -311,33 +300,6 @@ class Container extends Nette\Forms\Container
 		}
 
 		return $this->httpPost;
-	}
-
-
-
-	/**
-	 * @internal
-	 * @param \Nette\Application\Request $request
-	 * @return Container
-	 */
-	public function setRequest(Nette\Application\Request $request)
-	{
-		$this->httpRequest = $request;
-		return $this;
-	}
-
-
-
-	/**
-	 * @return \Nette\Application\Request
-	 */
-	private function getRequest()
-	{
-		if ($this->httpRequest !== NULL) {
-			return $this->httpRequest;
-		}
-
-		return $this->httpRequest = $this->getForm()->getPresenter()->getRequest();
 	}
 
 
