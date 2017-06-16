@@ -351,7 +351,7 @@ class Container extends Nette\Forms\Container
 	 */
 	public function remove(Nette\Forms\Container $container, $cleanUpGroups = FALSE)
 	{
-		if ($container->parent !== $this) {
+		if ($container->getParent() !== $this) {
 			throw new Nette\InvalidArgumentException('Given component ' . $container->name . ' is not children of ' . $this->name . '.');
 		}
 
@@ -527,12 +527,12 @@ class Container extends Nette\Forms\Container
 				$replicator = $button->lookup(__NAMESPACE__ . '\Container');
 				/** @var Container $replicator */
 				if (is_callable($callback)) {
-					Callback::invoke($callback, $replicator, $button->parent);
+					Callback::invoke($callback, $replicator, $button->getParent());
 				}
 				if ($form = $button->getForm(FALSE)) {
 					$form->onSuccess = [];
 				}
-				$replicator->remove($button->parent);
+				$replicator->remove($button->getParent());
 			};
 			return $_this;
 		});
