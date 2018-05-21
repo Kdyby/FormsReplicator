@@ -433,7 +433,10 @@ class Container extends Nette\Forms\Container
 				}
 				return strlen($value);
 			};
-			$rows[] = array_filter(array_diff_key($item, $subComponents), $filter) ?: FALSE;
+			if (count($item) !== count($row = array_filter(array_diff_key($item, $subComponents), $filter))) {
+				$row = FALSE;
+			}
+			$rows[] = $row;
 		}
 
 		return count(array_filter($rows));
