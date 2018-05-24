@@ -511,9 +511,12 @@ class Container extends Nette\Forms\Container
 			});
 		}
 
-		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', $methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE) {
+		Nette\Utils\ObjectMixin::setExtensionMethod('Nette\Forms\Container', $methodName, function (Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = FALSE, $containerClass = NULL) {
 			$control = new Container($factory, $createDefault, $forceDefault);
 			$control->currentGroup = $_this->currentGroup;
+			if ($containerClass) {
+				$control->containerClass = $containerClass;
+			}
 			return $_this[$name] = $control;
 		});
 
