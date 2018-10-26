@@ -1,47 +1,222 @@
-Kdyby/FormsReplicator
-======
+Quickstart
+==========
 
-[![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=master)](https://travis-ci.org/Kdyby/FormsReplicator)
-[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=master)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=master)
-[![Join the chat at https://gitter.im/Kdyby/Help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kdyby/Help)
+Nette forms container replicator aka `addDynamic`.
 
-
-Save me please!
----------------
-
-The maintainer of this project has no more time to maintain it. It may even contain unfixed bugs :(
-
-If you need something like this and you're willing to join in, you're welcome to take over this project.
-
-![help](https://cdn.kdyby.org/keyboard-help.png)
-
-
-Requirements
-------------
-
-Kdyby/FormsReplicator requires PHP 5.5 or higher.
-
-- [Nette Framework](https://github.com/nette/nette)
 
 
 Installation
 ------------
 
-The best way to install Kdyby/FormsReplicator is using  [Composer](http://getcomposer.org/):
+The best way to install webwings/form-replicator is using  [Composer](http://getcomposer.org/):
 
-```sh
-$ composer require kdyby/forms-replicator:~1.1
+```php
+$ composer require webwings/forms-replicator
+```
+
+Now you have to enable the extension using your neon config
+
+```yml
+extensions:
+	replicator: Webwings\Replicator\DI\ReplicatorExtension
+```
+
+Or place the Replicator class to folder, where it is autoloaded and add following line to `boostrap.php` or to `BasePresenter::startup()`.
+
+```php
+Webwings\Replicator\Container::register();
 ```
 
 
-Documentation
-------------
+Attaching to form
+-----------------
 
-Learn more in the [documentation](https://github.com/Kdyby/FormsReplicator/blob/master/docs/en/index.md).
+It can be used for simple things, for example list of dates
+
+```php
+use Nette\Forms\Container;
+
+$form->addDynamic('dates', function (Container $container) {
+		$container->addDate('date');
+});
+```
+
+Or complex combinations, for example users and their addresses
+
+```php
+$form->addDynamic('users', function (Container $user) {
+		$user->addText('name', 'Name');
+		$user->addText('surname', 'surbame');
+		$user->addDynamic('addresses', function (Container $address) {
+				$address->addText('street', 'Street');
+				$address->addText('city', 'City');
+				$address->addText('zip', 'Zip');
+				// ...
+		}, 1);
+		// ...
+}, 2);
+```
+
+There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in [a934a07](https://github.com/Kdyby/Replicator/blob/master/src/Kdyby/Replicator/Container.php#L62) that won't let you have less than default count of containers in replicator.
 
 
------
+Handling
+--------
 
-Homepage [http://www.kdyby.org](http://www.kdyby.org) and repository [http://github.com/kdyby/FormsReplicator](http://github.com/kdyby/FormsReplicator).
+Handling is trivial, you just walk the values from user in cycle.
+
+```php
+use Nette\Application\UI\Form;
+
+public function FormSubmitted(Form $form)
+{
+	foreach ($form['users']->values as $user) { // values from replicator
+		dump($user['name'] . ' ' . $user['surname']);
+
+		foreach ($user['addresses'] as $address) { // working with values from container
+			dump($address['city']);
+		}
+	}
+}
+```
+
+[WARNING]
+Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a [Multiple File Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
+
+
+Editation of items
+------------------
+
+You can use names of nested containers as identifiers. From the nature of form containers, you can work with them like this:
+
+```php
+public function actionEditUsers()
+{
+	$form = $this['myForm'];
+	if (!$form->isSubmitted()) { // if form was not submitted
+		// expects instance of model class in presenter
+		$users = $this->model->findAll();
+		foreach ($users as $user) {
+			$form['users'][$user->id]->setDefaults($user);
+			// fill the container with default values
+		}
+	}
+}
+```
+
+And modify the handling
+
+```php
+public function FormSubmitted(Form $form)
+{
+	foreach ($form['users']->values as $userId => $user) {
+		// now we have asscesible ID of the user and associated values from the container
+	}
+}
+```
+
+
+Adding and removing of containers
+---------------------------------
+
+There is an example in sandbox, where every container has button to be deleted and at the end is button for adding new one
+
+```php
+protected function createComponentMyForm()
+{
+	$form = new Nette\Application\UI\Form;
+
+	$removeEvent = callback($this, 'MyFormRemoveElementClicked');
+
+	// name, factory, default count
+	$users = $form->addDynamic('users', function (Container $user) use ($removeEvent) {
+		// ...
+		$user->addSubmit('remove', 'Remove')
+			->setValidationScope(FALSE) # disables validation
+			->onClick[] = $removeEvent;
+	}, 1);
+
+	$users->addSubmit('add', 'Add next person')
+		->setValidationScope(FALSE)
+		->onClick[] = callback($this, 'MyFormAddElementClicked');
+
+	// ...
+}
+```
+
+Handling of add button is easy. Next example is useful, when you expect that your users like to prepare more containers before they fill and submit them.
+
+```php
+use Nette\Forms\Controls\SubmitButton;
+
+public function MyFormAddElementClicked(SubmitButton $button)
+{
+	$button->parent->createOne();
+}
+```
+
+When you want to allow adding only one container each time, so there will be no more than one unfilled at time, you would have to check for values manualy, or with helper function.
+
+```php
+public function MyFormAddElementClicked(SubmitButton $button)
+{
+	$users = $button->parent;
+
+	// count how many containers were filled
+	if ($users->isAllFilled()) {
+		// add one container to replicator
+		$button->parent->createOne();
+	}
+}
+```
+
+Method `Replicator::isAllFilled()` checks, if the form controls are not empty. It's argument says which ones not to check.
+
+When the user clicks to delete, the following event will be invoked
+
+```php
+public function MyFormRemoveElementClicked(SubmitButton $button)
+{
+	// first parent is container
+	// second parent is it's replicator
+	$users = $button->parent->parent;
+	$users->remove($button->parent, TRUE);
+}
+```
+
+If I'd want to for example delete user also from database and I have container names as identifiers, then I can read the value like this:
+
+```php
+public function MyFormRemoveElementClicked(SubmitButton $button)
+{
+	$id = $button->parent->name;
+}
+```
+
+
+Manual rendering
+----------------
+
+When you add a submit button to replicator, you certainly don't want to try it render as container, so for skipping them, there is a method `getContainers()`, that will return only existing [containers](doc:/en/forms#toc-addcontainer).
+
+```html
+{form myForm}
+{foreach $form['users']->getContainers() as $user}
+
+	{$user['name']->control} {$user['name']->label}
+
+{/foreach}
+{/form}
+```
+
+Or with form macros
+
+```html
+{form myForm}
+{foreach $form['users']->getContainers() as $id => $user}
+
+	{input users-$id-name} {label users-$id-name /}
+
+{/foreach}
+{/form}
+```
