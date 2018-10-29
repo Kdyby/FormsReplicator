@@ -1,5 +1,5 @@
 {
-	"name": "kdyby/forms-replicator",
+	"name": "webwings/forms-replicator",
 	"type": "library",
 	"description": "Nette forms container replicator aka addDynamic, based on kdyby/form-replicator",
 	"keywords": ["nette", "kdyby", "forms", "replicator", "addDynamic"],
