@@ -46,6 +46,12 @@ class Container extends \Nette\Forms\Container
     /** @var array */
     private $httpPost;
 
+    /** @var UI\Control */
+    private $control;
+
+    /** @var Presenter */
+    private $presenter;
+
     /** @var string|bool */
     private static $registered = false;
 
@@ -62,9 +68,14 @@ class Container extends \Nette\Forms\Container
         parent::__construct();
         $this->monitor(Presenter::class, function (Presenter $presenter) {
             $this->attached($presenter);
+            $this->presenter = $presenter;
         });
         $this->monitor(Form::class, function (Form $form) {
             $this->attached($form);
+        });
+
+        $this->monitor(UI\Control::class, function (UI\Control $control) {
+            $this->control = $control;
         });
 
         try {
@@ -78,19 +89,11 @@ class Container extends \Nette\Forms\Container
 
         $this->createDefault = $createDefault;
         $this->forceDefault = $forceDefault;
-
-        $this->monitor(Form::class, function (Form $form) {
-            if (!$form instanceof UI\Form) {
-                $this->loadHttpData();
-                $this->createDefault();
-            }
-        });
-
     }
 
 
-    /*
-     * @param \Nette\ComponentModel\IContainer
+    /**
+     * @param \Nette\ComponentModel\IContainer $obj
      */
     protected function attached($obj)
     {
@@ -454,11 +457,14 @@ class Container extends \Nette\Forms\Container
             return;
         }
 
-        SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = null) {
+        SubmitButton::extensionMethod('addRemoveOnClick', function (SubmitButton $_this, $callback = null, array $snippets = []) {
             $_this->setValidationScope(false);
-            $_this->onClick[] = function (SubmitButton $button) use ($callback) {
+            $_this->onClick[] = function (SubmitButton $button) use ($callback, $snippets) {
                 /** @var Container $replicator */
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
+
+                /** @var UI\Control $control */
+                $control = $button->lookup(UI\Control::class);
 
                 if (is_callable($callback)) {
                     Callback::invokeSafe($callback, [$replicator, $button->parent], null);
@@ -470,14 +476,23 @@ class Container extends \Nette\Forms\Container
                 if ($button->parent) {
                     $replicator->remove($button->parent);
                 }
+
+                if ($control && $snippets) {
+                    foreach ($snippets as $snippet) {
+                        $control->redrawControl($snippet);
+                    }
+                }
             };
             return $_this;
         });
 
-        SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, $allowEmpty = false, $callback = null) {
-            $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback) {
+        SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, bool $allowEmpty = false, $callback = null, array $snippets = []) {
+            $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback, $snippets) {
                 /** @var Container $replicator */
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
+
+                /** @var UI\Control $control */
+                $control = $button->lookup(UI\Control::class);
 
                 if (!is_bool($allowEmpty)) {
                     $callback = Callback::closure($allowEmpty);
@@ -493,6 +508,12 @@ class Container extends \Nette\Forms\Container
 
                 if ($button->getForm() instanceof Form) {
                     $button->getForm()->onSuccess = [];
+                }
+
+                if ($control && $snippets) {
+                    foreach ($snippets as $snippet) {
+                        $control->redrawControl($snippet);
+                    }
                 }
             };
             return $_this;
