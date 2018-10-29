@@ -487,6 +487,7 @@ class Container extends \Nette\Forms\Container
         });
 
         SubmitButton::extensionMethod('addCreateOnClick', function (SubmitButton $_this, bool $allowEmpty = false, $callback = null, array $snippets = []) {
+            $_this->setValidationScope(false);
             $_this->onClick[] = function (SubmitButton $button) use ($allowEmpty, $callback, $snippets) {
                 /** @var Container $replicator */
                 $replicator = $button->lookup(__NAMESPACE__ . '\Container');
