@@ -5,6 +5,7 @@ namespace Webwings\Replicator\DI;
 use Nette\Configurator;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
+use Nette\Forms\Container;
 use Nette\PhpGenerator\ClassType;
 
 /**
@@ -13,6 +14,15 @@ use Nette\PhpGenerator\ClassType;
  */
 class ReplicatorExtension extends CompilerExtension
 {
+    private const DEFAULTS = [
+        'methodName' => 'addDynamic',
+        'containerClass' => '\Nette\Forms\Container',
+    ];
+
+    public function loadConfiguration()
+    {
+        $this->validateConfig(self::DEFAULTS);
+    }
 
     /**
      * @param ClassType $class
@@ -22,7 +32,10 @@ class ReplicatorExtension extends CompilerExtension
         parent::afterCompile($class);
 
         $init = $class->getMethod('initialize');
-        $init->addBody('\Webwings\Replicator\Container::register();');
+        $init->addBody("\Webwings\Replicator\Container::register(?, ?);", [
+            $this->config['methodName'],
+            $this->config['containerClass'],
+        ]);
     }
 
 

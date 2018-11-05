@@ -437,9 +437,10 @@ class Container extends \Nette\Forms\Container
 
     /**
      * @param string $methodName
+     * @param string $containerClass
      * @return void
      */
-    public static function register(string $methodName = 'addDynamic')
+    public static function register(string $methodName = 'addDynamic', string $containerClass = '\Nette\Forms\Container')
     {
         if (self::$registered) {
             \Nette\Forms\Container::extensionMethod(self::$registered, function () {
@@ -447,9 +448,10 @@ class Container extends \Nette\Forms\Container
             });
         }
 
-        \Nette\Forms\Container::extensionMethod($methodName, function (\Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = false) {
+        \Nette\Forms\Container::extensionMethod($methodName, function (\Nette\Forms\Container $_this, $name, $factory, $createDefault = 0, $forceDefault = false) use ($containerClass) {
             $control = new Container($factory, $createDefault, $forceDefault);
             $control->currentGroup = $_this->currentGroup;
+            $control->containerClass = $containerClass;
             return $_this[$name] = $control;
         });
 
