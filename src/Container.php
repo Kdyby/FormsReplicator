@@ -260,8 +260,12 @@ class Container extends \Nette\Forms\Container
         }
 
         if (!$this->getForm()->isSubmitted()) {
-            foreach (range(0, $this->createDefault - 1) as $key) {
-                $this->createOne($key);
+            $i = 0;
+            while (iterator_count($this->getContainers()) < $this->createDefault) {
+                if (!isset($this->created[$i])) {
+                    $this->createOne($i);
+                }
+                $i++;
             }
 
         } elseif ($this->forceDefault) {
