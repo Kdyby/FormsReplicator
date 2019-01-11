@@ -275,8 +275,8 @@ class Container extends Nette\Forms\Container
 		}
 
 		if (!$this->getForm()->isSubmitted()) {
-			foreach (range(0, $this->createDefault - 1) as $key) {
-				$this->createOne($key);
+			while (iterator_count($this->getContainers()) < $this->createDefault) {
+				$this->createOne();
 			}
 
 		} elseif ($this->forceDefault) {
