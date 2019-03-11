@@ -111,7 +111,7 @@ class ContainerTest extends Tester\TestCase
 				2 => ['name' => 'Holy'],
 				3 => ['name' => 'Rimmer'],
 			],
-			'do' => 'form-submit'
+			'_do' => 'form-submit'
 		]);
 
 		// container and submit button
@@ -136,7 +136,7 @@ class ContainerTest extends Tester\TestCase
 				2 => ['name' => 'Holy'],
 				3 => ['name' => 'Rimmer'],
 			],
-			'do' => 'form-submit'
+			'_do' => 'form-submit'
 		]);
 
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
@@ -161,7 +161,7 @@ class ContainerTest extends Tester\TestCase
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [0 => ['emails' => [0 => ['email' => '']]]],
-			'do' => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
@@ -180,7 +180,7 @@ class ContainerTest extends Tester\TestCase
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [0 => ['emails' => [0 => ['email' => 'foo']]]],
-			'do' => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
