@@ -4,10 +4,10 @@
 
 [![Build Status](https://img.shields.io/travis/Kdyby/FormsReplicator.svg?style=flat-square)](https://travis-ci.org/Kdyby/FormsReplicator)
 [![Code coverage](https://img.shields.io/coveralls/Kdyby/FormsReplicator.svg?style=flat-square)](https://coveralls.io/github/Kdyby/FormsReplicator)
-[![Licence](https://img.shields.io/packagist/l/Kdyby/FormsReplicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Downloads this Month](https://img.shields.io/packagist/dm/Kdyby/FormsReplicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Downloads total](https://img.shields.io/packagist/dt/Kdyby/FormsReplicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Latest stable](https://img.shields.io/packagist/v/Kdyby/FormsReplicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Licence](https://img.shields.io/packagist/l/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Downloads total](https://img.shields.io/packagist/dt/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
 
 ## Discussion / Help
 
