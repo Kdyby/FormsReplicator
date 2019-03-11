@@ -21,10 +21,12 @@ composer require kdyby/forms-replicator
 
 ## Versions
 
-| State       | Version      | Branch   | PHP      |
-|-------------|--------------|----------|----------|
-| rc          | `^2.0.0@rc`  | `master` | `>= 7.1` |
-| stable      | `^1.3.0`     | `master` | `>= 5.6` |
+| State       | Version      | Branch      | PHP      | Nette    |
+|-------------|--------------|-------------|----------|----------|
+| rc          | `^2.0.0@rc`  | `master`    | `>= 7.1` | `^3.0.0` |
+| TODO        | `^1.4.0`     | `nette-2.4` | `>= 5.6` | `^2.4.0` |
+| stable      | `^1.3.0`     | `nette-2.3` | `>= 5.6` | `^2.3.0` |
+| stable      | `^1.2.0`     | `nette-2.2` | `>= 5.6` | `^2.2.0` |
 
 ## Overview
 
