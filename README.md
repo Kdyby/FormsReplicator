@@ -1,47 +1,57 @@
-Kdyby/FormsReplicator
-======
-
-[![Build Status](https://travis-ci.org/Kdyby/FormsReplicator.svg?branch=nette-2.3)](https://travis-ci.org/Kdyby/FormsReplicator)
-[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg)](https://packagist.org/packages/kdyby/forms-replicator)
-[![Coverage Status](https://coveralls.io/repos/github/Kdyby/FormsReplicator/badge.svg?branch=nette-2.3)](https://coveralls.io/github/Kdyby/FormsReplicator?branch=nette-2.3)
-[![Join the chat at https://gitter.im/Kdyby/Help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Kdyby/Help)
-
-
-Save me please!
----------------
-
-The maintainer of this project has no more time to maintain it. It may even contain unfixed bugs :(
-
-If you need something like this and you're willing to join in, you're welcome to take over this project.
-
-![help](https://cdn.kdyby.org/keyboard-help.png)
-
-
-Requirements
-------------
-
-Kdyby/FormsReplicator requires PHP 5.3.2 or higher.
-
-- [Nette Framework](https://github.com/nette/nette)
-
-
-Installation
-------------
-
-The best way to install Kdyby/FormsReplicator is using  [Composer](http://getcomposer.org/):
-
-```sh
-$ composer require kdyby/forms-replicator:~1.1
-```
-
-
-Documentation
-------------
-
-Learn more in the [documentation](https://github.com/Kdyby/FormsReplicator/blob/nette-2.3/docs/en/index.md).
-
+# Kdyby/FormsReplicator
 
 -----
 
-Homepage [http://www.kdyby.org](http://www.kdyby.org) and repository [http://github.com/kdyby/FormsReplicator](http://github.com/kdyby/FormsReplicator).
+[![Build Status](https://img.shields.io/travis/Kdyby/FormsReplicator.svg?style=flat-square)](https://travis-ci.org/Kdyby/FormsReplicator)
+[![Code coverage](https://img.shields.io/coveralls/Kdyby/FormsReplicator.svg?style=flat-square)](https://coveralls.io/github/Kdyby/FormsReplicator)
+[![Licence](https://img.shields.io/packagist/l/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Downloads total](https://img.shields.io/packagist/dt/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+[![Latest stable](https://img.shields.io/packagist/v/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
+
+## Discussion / Help
+
+[![Join the chat](https://img.shields.io/gitter/room/Kdyby/Help.svg?style=flat-square)](https://gitter.im/Kdyby/Help)
+
+## Install
+
+```sh
+composer require kdyby/forms-replicator
+```
+
+## Versions
+
+| State       | Version      | Branch      | PHP      | Nette    |
+|-------------|--------------|-------------|----------|----------|
+| rc          | `^2.0.0@rc`  | `master`    | `>= 7.1` | `^3.0.0` |
+| TODO        | `^1.4.0`     | `nette-2.4` | `>= 5.6` | `^2.4.0` |
+| stable      | `^1.3.0`     | `nette-2.3` | `>= 5.6` | `^2.3.0` |
+| stable      | `^1.2.0`     | `nette-2.2` | `>= 5.6` | `^2.2.0` |
+
+## Overview
+
+- [Learn more in the documentation](https://github.com/Kdyby/FormsReplicator/blob/master/docs/en/index.md)
+
+## Maintainers
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center">
+        <a href="https://github.com/solcik">
+            <img width="150" height="150" src="https://avatars2.githubusercontent.com/u/1543737?s=460&v=4">
+        </a>
+        </br>
+        <a href="https://github.com/solcik">David Šolc</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+-----
+
+Thank you for testing, reporting and contributing.
+
+-----
+
+Homepage [https://www.kdyby.org](https://www.kdyby.org) and repository [https://github.com/Kdyby/FormsReplicator](https://github.com/Kdyby/FormsReplicator).

@@ -10,48 +10,43 @@
 			"name": "Filip Procházka",
 			"homepage": "http://filip-prochazka.com",
 			"email": "filip@prochazka.su"
+		},
+		{
+			"name": "David Šolc",
+			"homepage": "https://solc.dev",
+			"email": "solcik@gmail.com"
 		}
 	],
 	"support": {
-		"email": "filip@prochazka.su",
-		"issues": "https://github.com/kdyby/replicator/issues"
+		"issues": "https://github.com/Kdyby/FormsReplicator/issues"
 	},
 	"require": {
-		"nette/forms": "2.3.*@dev"
+		"php": ">=5.6",
+		"nette/forms": "2.4.*"
 	},
 	"require-dev": {
-		"nette/application": "2.3.*@dev",
-		"nette/bootstrap": "2.3.*@dev",
-		"nette/caching": "2.3.*@dev",
-		"nette/component-model": "2.2.*@dev|2.3.*@dev",
-		"nette/database": "2.3.*@dev",
-		"nette/deprecated": "2.3.*@dev",
-		"nette/di": "2.3.*@dev",
-		"nette/finder": "2.3.*@dev",
-		"nette/forms": "2.3.*@dev",
-		"nette/http": "2.3.*@dev",
-		"nette/mail": "2.3.*@dev",
-		"nette/neon": "2.3.*@dev",
-		"nette/php-generator": "2.3.*@dev",
-		"nette/reflection": "2.3.*@dev",
-		"nette/robot-loader": "2.3.*@dev",
-		"nette/safe-stream": "2.3.*@dev",
-		"nette/security": "2.3.*@dev",
-		"nette/tokenizer": "2.2.*@dev|2.3.*@dev",
-		"nette/utils": "2.3.*@dev",
-		"latte/latte": "2.3.*@dev",
-		"tracy/tracy": "2.3.*@dev",
-
-		"nette/tester": "~1.7"
+		"nette/application": "2.4.*",
+		"nette/bootstrap": "2.4.*",
+		"nette/di": "2.4.*",
+		"tracy/tracy": "^2.6",
+		"nette/tester": "^2.2"
 	},
 	"autoload": {
-		"psr-0": {
-			"Kdyby\\Replicator\\": "src/"
+		"psr-4": {
+			"Kdyby\\Replicator\\": "src/Kdyby/Replicator/"
 		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"KdybyTests\\Replicator\\": "tests/Replicator/"
+		}
+	},
+	"suggest": {
+		"nette/di": "to use ReplicatorExtension[CompilerExtension]"
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-master": "1.2-dev"
+			"dev-master": "2.0-dev"
 		}
 	}
 }
