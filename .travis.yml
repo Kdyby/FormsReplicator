@@ -4,6 +4,8 @@ php:
   - 5.6
   - 7.0
   - 7.1
+  - 7.2
+  - 7.3
 
 cache:
   directories:
@@ -28,12 +30,12 @@ jobs:
     - env: title="Lowest Dependencies 5.6"
       php: 5.6
       install:
-        - travis_retry composer update --no-progress --prefer-dist --prefer-lowest
+        - travis_retry composer update --no-progress --prefer-dist --prefer-lowest --prefer-stable
       script:
         - ./vendor/bin/tester -s -p php --colors 1 -C ./tests/KdybyTests
 
     - stage: Test Coverage
-      php: 7.1
+      php: 7.3
       script:
         - ./vendor/bin/tester -s -p phpdbg --colors 1 -C --coverage ./coverage.xml --coverage-src ./src ./tests/KdybyTests
       after_script:
@@ -41,7 +43,7 @@ jobs:
         - php php-coveralls.phar --verbose --config tests/.coveralls.yml
 
     - stage: Outdated Dependencies
-      php: 7.1
+      php: 7.3
       script:
         - composer outdated --direct --strict
 
