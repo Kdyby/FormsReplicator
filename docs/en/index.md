@@ -10,13 +10,13 @@ Installation
 
 The best way to install Kdyby/Replicator is using  [Composer](http://getcomposer.org/):
 
-```php
-$ composer require kdyby/forms-replicator:@dev
+```bash
+composer require kdyby/forms-replicator
 ```
 
 Now you have to enable the extension using your neon config
 
-```yml
+```neon
 extensions:
 	replicator: Kdyby\Replicator\DI\ReplicatorExtension
 ```
@@ -36,28 +36,33 @@ It can be used for simple things, for example list of dates
 ```php
 use Nette\Forms\Container;
 
-$form->addDynamic('dates', function (Container $container) {
-		$container->addDate('date');
+$form->addDynamic('dates', static function (Container $container): void {
+	$container->addDate('date');
 });
 ```
 
 Or complex combinations, for example users and their addresses
 
 ```php
-$form->addDynamic('users', function (Container $user) {
-		$user->addText('name', 'Name');
-		$user->addText('surname', 'surbame');
-		$user->addDynamic('addresses', function (Container $address) {
-				$address->addText('street', 'Street');
-				$address->addText('city', 'City');
-				$address->addText('zip', 'Zip');
-				// ...
-		}, 1);
+use Nette\Forms\Container;
+
+$form->addDynamic('users', static function (Container $user): void {
+	$user->addText('name', 'Name');
+	$user->addText('surname', 'surbame');
+
+	$user->addDynamic('addresses', static function (Container $address): void {
+		$address->addText('street', 'Street');
+		$address->addText('city', 'City');
+		$address->addText('zip', 'Zip');
+
 		// ...
+	}, 1);
+
+	// ...
 }, 2);
 ```
 
-There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new options `$forceDefault` in [a934a07](https://github.com/Kdyby/Replicator/blob/master/src/Kdyby/Replicator/Container.php#L62) that won't let you have less than default count of containers in replicator.
+There has been little misunderstanding, that when form is submitted, and new container is created, that replicator automatically adds default containers. I was not sure if this is the correct behaviour so I've added new option `$forceDefault` that won't let you have less than default count of containers in replicator.
 
 
 Handling
@@ -68,7 +73,7 @@ Handling is trivial, you just walk the values from user in cycle.
 ```php
 use Nette\Application\UI\Form;
 
-public function FormSubmitted(Form $form)
+public function formSubmitted(Form $form): void
 {
 	foreach ($form['users']->values as $user) { // values from replicator
 		dump($user['name'] . ' ' . $user['surname']);
@@ -81,7 +86,7 @@ public function FormSubmitted(Form $form)
 ```
 
 [WARNING]
-Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a [Multiple File Upload](http://addons.nette.org/jkuchar/multiplefileupload) component instead.
+Replicator is not suitable for handling file uploads. If you do not have detailed knowledge, how the forms work, and don't need Replicator's functionality specifically, consider using a [Multiple File Upload](https://componette.com/jkuchar/multiplefileupload/) component instead.
 
 
 Editation of items
@@ -90,12 +95,14 @@ Editation of items
 You can use names of nested containers as identifiers. From the nature of form containers, you can work with them like this:
 
 ```php
-public function actionEditUsers()
+public function actionEditUsers(): void
 {
 	$form = $this['myForm'];
+
 	if (!$form->isSubmitted()) { // if form was not submitted
 		// expects instance of model class in presenter
 		$users = $this->model->findAll();
+
 		foreach ($users as $user) {
 			$form['users'][$user->id]->setDefaults($user);
 			// fill the container with default values
@@ -107,7 +114,9 @@ public function actionEditUsers()
 And modify the handling
 
 ```php
-public function FormSubmitted(Form $form)
+use Nette\Application\UI\Form;
+
+public function formSubmitted(Form $form): void
 {
 	foreach ($form['users']->values as $userId => $user) {
 		// now we have asscesible ID of the user and associated values from the container
@@ -122,25 +131,28 @@ Adding and removing of containers
 There is an example in sandbox, where every container has button to be deleted and at the end is button for adding new one
 
 ```php
-protected function createComponentMyForm()
-{
-	$form = new Nette\Application\UI\Form;
+use Nette\Application\UI\Form;
 
-	$removeEvent = callback($this, 'MyFormRemoveElementClicked');
+protected function createComponentMyForm(): Form
+{
+	$form = new Form;
 
 	// name, factory, default count
-	$users = $form->addDynamic('users', function (Container $user) use ($removeEvent) {
+	$users = $form->addDynamic('users', static function (Container $user) use ($removeEvent): void {
 		// ...
+
 		$user->addSubmit('remove', 'Remove')
-			->setValidationScope(FALSE) # disables validation
-			->onClick[] = $removeEvent;
+			->setValidationScope(false) # disables validation
+			->onClick[] = [$this, 'myFormAddElementClicked'];
 	}, 1);
 
 	$users->addSubmit('add', 'Add next person')
-		->setValidationScope(FALSE)
-		->onClick[] = callback($this, 'MyFormAddElementClicked');
+		->setValidationScope(false)
+		->onClick[] = [$this, 'myFormAddElementClicked'];
 
 	// ...
+
+	return $form;
 }
 ```
 
@@ -149,7 +161,7 @@ Handling of add button is easy. Next example is useful, when you expect that you
 ```php
 use Nette\Forms\Controls\SubmitButton;
 
-public function MyFormAddElementClicked(SubmitButton $button)
+public function myFormAddElementClicked(SubmitButton $button): void
 {
 	$button->parent->createOne();
 }
@@ -158,7 +170,9 @@ public function MyFormAddElementClicked(SubmitButton $button)
 When you want to allow adding only one container each time, so there will be no more than one unfilled at time, you would have to check for values manualy, or with helper function.
 
 ```php
-public function MyFormAddElementClicked(SubmitButton $button)
+use Nette\Forms\Controls\SubmitButton;
+
+public function myFormAddElementClicked(SubmitButton $button): void
 {
 	$users = $button->parent;
 
@@ -175,19 +189,23 @@ Method `Replicator::isAllFilled()` checks, if the form controls are not empty. I
 When the user clicks to delete, the following event will be invoked
 
 ```php
-public function MyFormRemoveElementClicked(SubmitButton $button)
+use Nette\Forms\Controls\SubmitButton;
+
+public function myFormRemoveElementClicked(SubmitButton $button): void
 {
 	// first parent is container
 	// second parent is it's replicator
 	$users = $button->parent->parent;
-	$users->remove($button->parent, TRUE);
+	$users->remove($button->parent, true);
 }
 ```
 
 If I'd want to for example delete user also from database and I have container names as identifiers, then I can read the value like this:
 
 ```php
-public function MyFormRemoveElementClicked(SubmitButton $button)
+use Nette\Forms\Controls\SubmitButton;
+
+public function myFormRemoveElementClicked(SubmitButton $button): void
 {
 	$id = $button->parent->name;
 }
@@ -201,11 +219,9 @@ When you add a submit button to replicator, you certainly don't want to try it r
 
 ```html
 {form myForm}
-{foreach $form['users']->getContainers() as $user}
-
-	{$user['name']->control} {$user['name']->label}
-
-{/foreach}
+	{foreach $form['users']->getContainers() as $user}
+		{$user['name']->control} {$user['name']->label}
+	{/foreach}
 {/form}
 ```
 
@@ -213,10 +229,8 @@ Or with form macros
 
 ```html
 {form myForm}
-{foreach $form['users']->getContainers() as $id => $user}
-
-	{input users-$id-name} {label users-$id-name /}
-
-{/foreach}
+	{foreach $form['users']->getContainers() as $id => $user}
+		{input users-$id-name} {label users-$id-name /}
+	{/foreach}
 {/form}
 ```
