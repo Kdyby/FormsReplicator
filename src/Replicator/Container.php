@@ -402,7 +402,7 @@ class Container extends Nette\Forms\Container
 		Nette\Forms\Container::extensionMethod(
 			$methodName,
 			function (Nette\Forms\Container $_this, string $name, callable $factory, int $createDefault = 0, bool $forceDefault = FALSE) {
-				$control = new Container($factory, $createDefault, $forceDefault);
+				$control = new static($factory, $createDefault, $forceDefault);
 				$control->currentGroup = $_this->currentGroup;
 
 				return $_this[$name] = $control;
@@ -418,8 +418,8 @@ class Container extends Nette\Forms\Container
 			function (Nette\Forms\Controls\SubmitButton $_this, ?callable $callback = NULL) {
 				$_this->setValidationScope([]);
 				$_this->onClick[] = function (Nette\Forms\Controls\SubmitButton $button) use ($callback) {
-					/** @var Container $replicator */
-					$replicator = $button->lookup(Container::class);
+					/** @var self $replicator */
+					$replicator = $button->lookup(static::class);
 					if (is_callable($callback)) {
 						$callback($replicator, $button->parent);
 					}
@@ -437,8 +437,8 @@ class Container extends Nette\Forms\Container
 			'addCreateOnClick',
 			function (Nette\Forms\Controls\SubmitButton $_this, bool $allowEmpty = FALSE, ?callable $callback = NULL) {
 				$_this->onClick[] = function (Nette\Forms\Controls\SubmitButton $button) use ($allowEmpty, $callback) {
-					/** @var Container $replicator */
-					$replicator = $button->lookup(Container::class);
+					/** @var self $replicator */
+					$replicator = $button->lookup(static::class);
 					if (!is_bool($allowEmpty)) {
 						$callback = Closure::fromCallable($allowEmpty);
 						$allowEmpty = FALSE;
