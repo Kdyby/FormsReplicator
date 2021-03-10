@@ -142,12 +142,12 @@ protected function createComponentMyForm(): Form
 		// ...
 
 		$user->addSubmit('remove', 'Remove')
-			->setValidationScope(false) # disables validation
+			->setValidationScope([]) # disables validation
 			->onClick[] = [$this, 'myFormAddElementClicked'];
 	}, 1);
 
 	$users->addSubmit('add', 'Add next person')
-		->setValidationScope(false)
+		->setValidationScope([])
 		->onClick[] = [$this, 'myFormAddElementClicked'];
 
 	// ...
