@@ -2,8 +2,6 @@ name: CI
 
 on:
     push:
-    schedule:
-        -   cron: '0 8 * * 1' # At 08:00 on Monday
 
 jobs:
     parallel-lint:
@@ -17,7 +15,6 @@ jobs:
                     - "8.3"
                     - "8.4"
                 dependencies:
-                    - "lowest"
                     - "highest"
                 operating-system: [ 'ubuntu-24.04' ]
         runs-on: ${{ matrix.operating-system }}
@@ -83,7 +80,6 @@ jobs:
                     - "8.3"
                     - "8.4"
                 dependencies:
-                    - "lowest"
                     - "highest"
                 operating-system: [ 'ubuntu-24.04' ]
         runs-on: ${{ matrix.operating-system }}
@@ -116,7 +112,6 @@ jobs:
                     - "8.3"
                     - "8.4"
                 dependencies:
-                    - "lowest"
                     - "highest"
                 operating-system: [ 'ubuntu-24.04' ]
         runs-on: ${{ matrix.operating-system }}

@@ -15,16 +15,13 @@ use Nette;
 use Tester\Assert;
 use Tester\TestCase;
 
-
 require_once __DIR__ . '/../bootstrap.php';
-
 
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
 class ContainerTest extends TestCase
 {
-
 	public function testReplicating()
 	{
 		$replicator = new Container(function (Nette\Forms\Container $container) {
@@ -35,7 +32,6 @@ class ContainerTest extends TestCase
 		Assert::type(Nette\Forms\Controls\TextInput::class, $replicator[2]['name']);
 		Assert::type(Nette\Forms\Controls\TextInput::class, $replicator[1000]['name']);
 	}
-
 
 	public function testRenderingAttachAfterDefinition(): void
 	{
@@ -58,12 +54,15 @@ class ContainerTest extends TestCase
 
 		Assert::equal(Nette\Utils\ArrayHash::from([
 			'users' => [
-				0 => ['name' => ''],
-				2 => ['name' => ''],
+				0 => [
+					'name' => '',
+				],
+				2 => [
+					'name' => '',
+				],
 			],
 		]), $form->getValues());
 	}
-
 
 	public function testRenderingAttachBeforeDefinition(): void
 	{
@@ -87,12 +86,15 @@ class ContainerTest extends TestCase
 
 		Assert::equal(Nette\Utils\ArrayHash::from([
 			'users' => [
-				'0' => ['name' => ''],
-				'2' => ['name' => ''],
+				'0' => [
+					'name' => '',
+				],
+				'2' => [
+					'name' => '',
+				],
 			],
 		]), $form->getValues());
 	}
-
 
 	public function testSubmitAttachAfterDefinition(): void
 	{
@@ -104,11 +106,17 @@ class ContainerTest extends TestCase
 
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['name' => 'David'],
-				2 => ['name' => 'Holy'],
-				3 => ['name' => 'Rimmer'],
+				0 => [
+					'name' => 'David',
+				],
+				2 => [
+					'name' => 'Holy',
+				],
+				3 => [
+					'name' => 'Rimmer',
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 
 		// container and submit button
@@ -116,13 +124,18 @@ class ContainerTest extends TestCase
 
 		Assert::equal(Nette\Utils\ArrayHash::from([
 			'users' => [
-				0 => ['name' => 'David'],
-				2 => ['name' => 'Holy'],
-				3 => ['name' => 'Rimmer'],
+				0 => [
+					'name' => 'David',
+				],
+				2 => [
+					'name' => 'Holy',
+				],
+				3 => [
+					'name' => 'Rimmer',
+				],
 			],
 		]), $form->getValues());
 	}
-
 
 	public function testSubmitAttachBeforeDefinition(): void
 	{
@@ -130,11 +143,17 @@ class ContainerTest extends TestCase
 
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['name' => 'David'],
-				2 => ['name' => 'Holy'],
-				3 => ['name' => 'Rimmer'],
+				0 => [
+					'name' => 'David',
+				],
+				2 => [
+					'name' => 'Holy',
+				],
+				3 => [
+					'name' => 'Rimmer',
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
@@ -147,22 +166,33 @@ class ContainerTest extends TestCase
 
 		Assert::equal(Nette\Utils\ArrayHash::from([
 			'users' => [
-				0 => ['name' => 'David'],
-				2 => ['name' => 'Holy'],
-				3 => ['name' => 'Rimmer'],
+				0 => [
+					'name' => 'David',
+				],
+				2 => [
+					'name' => 'Holy',
+				],
+				3 => [
+					'name' => 'Rimmer',
+				],
 			],
 		]), $form->getValues());
 	}
-
 
 	public function testSubmitNestedReplicatorNotFilled(): void
 	{
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['emails' => [0 => ['email' => '']]],
+				0 => [
+					'emails' => [
+						0 => [
+							'email' => '',
+						],
+					],
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
@@ -170,19 +200,26 @@ class ContainerTest extends TestCase
 				$email->addText('note');
 			});
 		});
-		$users->addSubmit('add')->addCreateOnClick();
+		$users->addSubmit('add')
+			->addCreateOnClick();
 		Assert::false($users->isAllFilled());
 	}
-
 
 	public function testSubmitNestedReplicatorFilled(): void
 	{
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['emails' => [0 => ['email' => 'foo', 'note' => 'aa']]],
+				0 => [
+					'emails' => [
+						0 => [
+							'email' => 'foo',
+							'note' => 'aa',
+						],
+					],
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
@@ -190,20 +227,32 @@ class ContainerTest extends TestCase
 				$email->addText('note');
 			});
 		});
-		$users->addSubmit('add')->addCreateOnClick();
+		$users->addSubmit('add')
+			->addCreateOnClick();
 		Assert::true($users->isAllFilled());
 	}
-
 
 	public function testAddContainer(): void
 	{
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['emails' => [0 => ['email' => 'foo']]],
-				2 => ['emails' => [0 => ['email' => 'bar']]],
+				0 => [
+					'emails' => [
+						0 => [
+							'email' => 'foo',
+						],
+					],
+				],
+				2 => [
+					'emails' => [
+						0 => [
+							'email' => 'bar',
+						],
+					],
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
@@ -211,7 +260,8 @@ class ContainerTest extends TestCase
 			});
 		});
 		/** @var Nette\Forms\Controls\SubmitButton $submit */
-		$submit = $users->addSubmit('add')->addCreateOnClick();
+		$submit = $users->addSubmit('add')
+			->addCreateOnClick();
 
 		Assert::same(2, iterator_count($users->getContainers()));
 
@@ -220,22 +270,34 @@ class ContainerTest extends TestCase
 		Assert::same(3, iterator_count($users->getContainers()));
 	}
 
-
 	public function testRemoveContainer(): void
 	{
 		$form = new BaseForm();
 		$this->connectForm($form, [
 			'users' => [
-				0 => ['emails' => [0 => ['email' => 'foo']]],
-				2 => ['emails' => [0 => ['email' => 'bar']]],
+				0 => [
+					'emails' => [
+						0 => [
+							'email' => 'foo',
+						],
+					],
+				],
+				2 => [
+					'emails' => [
+						0 => [
+							'email' => 'bar',
+						],
+					],
+				],
 			],
-			'_do'   => 'form-submit',
+			'_do' => 'form-submit',
 		]);
 		$users = $form->addDynamic('users', function (Nette\Forms\Container $user) {
 			$user->addDynamic('emails', function (Nette\Forms\Container $email) {
 				$email->addText('email');
 			});
-			$user->addSubmit('remove')->addRemoveOnClick();
+			$user->addSubmit('remove')
+				->addRemoveOnClick();
 		});
 
 		Assert::same(2, iterator_count($users->getContainers()));
@@ -253,15 +315,18 @@ class ContainerTest extends TestCase
 		Assert::same(0, iterator_count($users->getContainers()));
 	}
 
-
 	private function connectForm(Nette\Application\UI\Form $form, array $post = []): MockPresenter
 	{
 		$container = Helper::createContainer();
 
 		/** @var MockPresenter $presenter */
-		$presenter = $container->createInstance(MockPresenter::class, ['form' => $form]);
+		$presenter = $container->createInstance(MockPresenter::class, [
+			'form' => $form,
+		]);
 		$container->callInjects($presenter);
-		$presenter->run(new Nette\Application\Request('Mock', $post ? 'POST' : 'GET', ['action' => 'default'], $post));
+		$presenter->run(new Nette\Application\Request('Mock', $post ? 'POST' : 'GET', [
+			'action' => 'default',
+		], $post));
 
 		$presenter->getComponent('form'); // connect form
 
@@ -275,10 +340,8 @@ class ContainerTest extends TestCase
 
 }
 
-
 class BaseForm extends Nette\Application\UI\Form
 {
-
 	public function addDynamic(string $name, callable $factory, int $createDefault = 0, bool $forceDefault = FALSE): Container
 	{
 		$control = new Container($factory, $createDefault, $forceDefault);
@@ -286,25 +349,15 @@ class BaseForm extends Nette\Application\UI\Form
 
 		return $this[$name] = $control;
 	}
-
 }
-
 
 class MockPresenter extends Nette\Application\UI\Presenter
 {
-
-	/**
-	 * @var Nette\Application\UI\Form
-	 */
-	private $form;
-
-
-	public function __construct(Nette\Application\UI\Form $form)
-	{
+	public function __construct(
+		private readonly Nette\Application\UI\Form $form
+	) {
 		parent::__construct();
-		$this->form = $form;
 	}
-
 
 	/**
 	 * @throws Nette\Application\AbortException
@@ -314,13 +367,10 @@ class MockPresenter extends Nette\Application\UI\Presenter
 		$this->terminate();
 	}
 
-
 	protected function createComponentForm(): Nette\Application\UI\Form
 	{
 		return $this->form;
 	}
-
 }
-
 
 (new ContainerTest())->run();

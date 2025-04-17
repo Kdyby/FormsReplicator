@@ -14,22 +14,18 @@ use Nette;
 use Tester\Environment;
 use Tester\TestCase;
 
-
 require_once __DIR__ . '/../bootstrap.php';
-
 
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
 class ExtensionTest extends TestCase
 {
-
 	protected function setUp(): void
 	{
 		parent::setUp();
 		Environment::$checkAssertions = FALSE;
 	}
-
 
 	public function testExtensionMethodIsRegistered(): void
 	{
@@ -39,8 +35,6 @@ class ExtensionTest extends TestCase
 		$form->addDynamic('people', function () {
 		});
 	}
-
 }
-
 
 (new ExtensionTest())->run();

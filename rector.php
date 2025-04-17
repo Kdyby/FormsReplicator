@@ -8,16 +8,16 @@ use Rector\Config\RectorConfig;
  * https://getrector.com/find-rule
  */
 return RectorConfig
-    ::configure()
-    ->withPaths(
-        [
-            __DIR__ . '/src',
-            __DIR__ . '/tests/Replicator',
-        ]
-    )
-    ->withRootFiles()
-    ->withParallel()
-    ->withPhpSets(
-        php81: true,
-    )
+	::configure()
+		->withPaths(
+			[
+				__DIR__ . '/src',
+				__DIR__ . '/tests/Replicator',
+			]
+		)
+		->withRootFiles()
+		->withParallel()
+		->withPhpSets(
+			php81: true,
+		)
 ;
