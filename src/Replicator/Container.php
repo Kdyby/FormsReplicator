@@ -99,7 +99,7 @@ class Container extends Nette\Forms\Container
 
 
 	/**
-	 * @return Iterator|Nette\Forms\Container[]
+	 * @return Iterator<Nette\Forms\Container>
 	 */
 	public function getContainers(bool $recursive = FALSE): Iterator
 	{
@@ -108,7 +108,7 @@ class Container extends Nette\Forms\Container
 
 
 	/**
-	 * @return Iterator|Nette\Forms\Controls\SubmitButton[]
+	 * @return Iterator<Nette\Forms\ISubmitterControl>
 	 */
 	public function getButtons(bool $recursive = FALSE): Iterator
 	{
