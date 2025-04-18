@@ -18,6 +18,6 @@ return RectorConfig
 		->withRootFiles()
 		->withParallel()
 		->withPhpSets(
-			php81: true,
+			php82: true,
 		)
 ;
