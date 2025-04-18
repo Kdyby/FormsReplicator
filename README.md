@@ -2,8 +2,7 @@
 
 -----
 
-[![Build Status](https://img.shields.io/travis/Kdyby/FormsReplicator.svg?style=flat-square)](https://travis-ci.org/Kdyby/FormsReplicator)
-[![Code coverage](https://img.shields.io/coveralls/Kdyby/FormsReplicator.svg?style=flat-square)](https://coveralls.io/github/Kdyby/FormsReplicator)
+[//]: # ([![Code coverage]&#40;https://img.shields.io/coveralls/Kdyby/FormsReplicator.svg?style=flat-square&#41;]&#40;https://coveralls.io/github/Kdyby/FormsReplicator&#41;)
 [![Licence](https://img.shields.io/packagist/l/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Downloads this Month](https://img.shields.io/packagist/dm/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
 [![Downloads total](https://img.shields.io/packagist/dt/kdyby/forms-replicator.svg?style=flat-square)](https://packagist.org/packages/kdyby/forms-replicator)
@@ -21,12 +20,13 @@ composer require kdyby/forms-replicator
 
 ## Versions
 
-| State       | Version      | Branch      | PHP      | Nette    |
-|-------------|--------------|-------------|----------|----------|
-| stable      | `^2.0.0`     | `master`    | `>= 7.1` | `^3.0.0` |
-| stable      | `^1.4.0`     | `nette-2.4` | `>= 5.6` | `^2.4.0` |
-| stable      | `^1.3.0`     | `nette-2.3` | `>= 5.6` | `^2.3.0` |
-| stable      | `^1.2.0`     | `nette-2.2` | `>= 5.6` | `^2.2.0` |
+| State       | Version  | Branch      | PHP      | Nette    |
+|-------------|----------|-------------|----------|----------|
+| stable      | `^3.0.0` | `master`    | `>= 8.2` | `^3.0.0` |
+| stable      | `^2.0.0` |             | `>= 7.1` | `^3.0.0` |
+| stable      | `^1.4.0` | `nette-2.4` | `>= 5.6` | `^2.4.0` |
+| stable      | `^1.3.0` | `nette-2.3` | `>= 5.6` | `^2.3.0` |
+| stable      | `^1.2.0` | `nette-2.2` | `>= 5.6` | `^2.2.0` |
 
 ## Overview
 
