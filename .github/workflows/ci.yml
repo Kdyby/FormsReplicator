@@ -1,0 +1,158 @@
+name: CI
+
+on:
+    push:
+    pull_request:
+
+jobs:
+    parallel-lint:
+        name: 🔎 Parallel lint
+        runs-on: 'ubuntu-latest'
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
+                dependencies:
+                    - "highest"
+        steps:
+            -   name: ⬇️ Checkout repo
+                uses: actions/checkout@v4
+
+            -   name: 🐘 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 📥 Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: "${{ matrix.dependencies }}"
+
+            -   name: 🔎 Parallel lint
+                run: php ./vendor/bin/parallel-lint -e php,phpt --exclude ./.git --exclude ./vendor .
+
+    phpstan:
+        name: 🟩️️ PHPStan
+        runs-on: 'ubuntu-latest'
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
+                dependencies:
+                    - "lowest"
+                    - "highest"
+        steps:
+            -   name: ⬇️ Checkout repo
+                uses: actions/checkout@v4
+
+            -   name: 🐘 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 📥 Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: "${{ matrix.dependencies }}"
+
+            -   name: 🟩️️ PHPStan
+                run: php ./vendor/bin/phpstan --ansi
+
+    ecs:
+        name: ✏️️ ECS
+        runs-on: 'ubuntu-latest'
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
+                dependencies:
+                    - "highest"
+        steps:
+            -   name: ⬇️ Checkout repo
+                uses: actions/checkout@v4
+
+            -   name: 🐘 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 📥 Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: "${{ matrix.dependencies }}"
+
+            -   name: ✏️️ ECS
+                run: php ./vendor/bin/ecs
+
+    rector:
+        name: 🛠️ Rector
+        runs-on: 'ubuntu-latest'
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
+                dependencies:
+                    - "highest"
+        steps:
+            -   name: ⬇️ Checkout repo
+                uses: actions/checkout@v4
+
+            -   name: 🐘 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: none
+
+            -   name: 📥 Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: "${{ matrix.dependencies }}"
+
+            -   name: 🛠️ Rector
+                run: php ./vendor/bin/rector process --dry-run --ansi
+
+    tester:
+        name: 🧮 Tester
+        runs-on: 'ubuntu-latest'
+        strategy:
+            fail-fast: false
+            matrix:
+                php:
+                    - "8.2"
+                    - "8.3"
+                    - "8.4"
+                dependencies:
+                    - "lowest"
+                    - "highest"
+        steps:
+            -   name: ⬇️ Checkout repo
+                uses: actions/checkout@v4
+
+            -   name: 🐘 Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php }}
+                    coverage: xdebug
+
+            -   name: 📥 Install dependencies
+                uses: ramsey/composer-install@v3
+                with:
+                    dependency-versions: "${{ matrix.dependencies }}"
+
+            -   name: 🧮 Tester
+                run: php ./vendor/bin/tester -s -p php --colors 1 -C ./tests/Replicator

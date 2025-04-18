@@ -2,14 +2,11 @@
 
 namespace KdybyTests\Replicator;
 
-
 use Kdyby\Replicator\DI\ReplicatorExtension;
 use Nette;
 
-
 class Helper
 {
-
 	public static function createContainer(): Nette\DI\Container
 	{
 		$config = new Nette\Configurator();
@@ -19,5 +16,4 @@ class Helper
 
 		return $config->createContainer();
 	}
-
 }

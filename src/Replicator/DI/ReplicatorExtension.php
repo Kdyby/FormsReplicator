@@ -13,13 +13,11 @@ namespace Kdyby\Replicator\DI;
 use Kdyby\Replicator\Container;
 use Nette;
 
-
 /**
  * @author Filip Procházka <filip@prochazka.su>
  */
 class ReplicatorExtension extends Nette\DI\CompilerExtension
 {
-
 	public function afterCompile(Nette\PhpGenerator\ClassType $class): void
 	{
 		parent::afterCompile($class);
@@ -28,12 +26,10 @@ class ReplicatorExtension extends Nette\DI\CompilerExtension
 		$init->addBody(Container::class . '::register();');
 	}
 
-
 	public static function register(Nette\Configurator $configurator): void
 	{
 		$configurator->onCompile[] = function ($config, Nette\DI\Compiler $compiler) {
 			$compiler->addExtension('formsReplicator', new ReplicatorExtension());
 		};
 	}
-
 }
