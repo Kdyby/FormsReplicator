@@ -7,17 +7,16 @@ on:
 jobs:
     parallel-lint:
         name: 🔎 Parallel lint
+        runs-on: 'ubuntu-latest'
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ 'ubuntu-24.04' ]
                 php:
                     - "8.2"
                     - "8.3"
                     - "8.4"
                 dependencies:
                     - "highest"
-        runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: ⬇️ Checkout repo
                 uses: actions/checkout@v4
@@ -38,10 +37,10 @@ jobs:
 
     phpstan:
         name: 🟩️️ PHPStan
+        runs-on: 'ubuntu-latest'
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ 'ubuntu-24.04' ]
                 php:
                     - "8.2"
                     - "8.3"
@@ -49,7 +48,6 @@ jobs:
                 dependencies:
                     - "lowest"
                     - "highest"
-        runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: ⬇️ Checkout repo
                 uses: actions/checkout@v4
@@ -70,17 +68,16 @@ jobs:
 
     ecs:
         name: ✏️️ ECS
+        runs-on: 'ubuntu-latest'
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ 'ubuntu-24.04' ]
                 php:
                     - "8.2"
                     - "8.3"
                     - "8.4"
                 dependencies:
                     - "highest"
-        runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: ⬇️ Checkout repo
                 uses: actions/checkout@v4
@@ -101,17 +98,16 @@ jobs:
 
     rector:
         name: 🛠️ Rector
+        runs-on: 'ubuntu-latest'
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ 'ubuntu-24.04' ]
                 php:
                     - "8.2"
                     - "8.3"
                     - "8.4"
                 dependencies:
                     - "highest"
-        runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: ⬇️ Checkout repo
                 uses: actions/checkout@v4
@@ -132,10 +128,10 @@ jobs:
 
     tester:
         name: 🧮 Tester
+        runs-on: 'ubuntu-latest'
         strategy:
             fail-fast: false
             matrix:
-                operating-system: [ 'ubuntu-24.04' ]
                 php:
                     - "8.2"
                     - "8.3"
@@ -143,7 +139,6 @@ jobs:
                 dependencies:
                     - "lowest"
                     - "highest"
-        runs-on: ${{ matrix.operating-system }}
         steps:
             -   name: ⬇️ Checkout repo
                 uses: actions/checkout@v4
