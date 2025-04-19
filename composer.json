@@ -55,5 +55,13 @@
 		"branch-alias": {
 			"dev-master": "3.0-dev"
 		}
+	},
+	"scripts": {
+		"lint": "php ./vendor/bin/parallel-lint -e php,phpt --exclude ./.git --exclude ./vendor .",
+		"phpstan": "php ./vendor/bin/phpstan --ansi",
+		"ecs": "php ./vendor/bin/ecs",
+		"rector": "php ./vendor/bin/rector process --dry-run --ansi",
+		"test": "php ./vendor/bin/tester -s -p php --colors 1 -C ./tests/Replicator",
+		"ci": "[\"@lint\", \"@phpstan\", \"@ecs\", \"@rector\", \"@test\"]"
 	}
 }
