@@ -94,8 +94,6 @@ class Container extends Nette\Forms\Container
 	 */
 	protected function attached(Nette\ComponentModel\IComponent $obj): void
 	{
-		parent::attached($obj);
-
 		if (
 			!$obj instanceof Nette\Application\UI\Presenter
 			&&
