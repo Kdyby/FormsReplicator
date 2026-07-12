@@ -143,7 +143,7 @@ class Container extends Nette\Forms\Container
 
 		($this->factoryCallback)($container);
 
-		return $this->created[$container->name] = $container;
+		return $this->created[$container->getName()] = $container;
 	}
 
 	private function getFirstControlName(): ?string
@@ -274,8 +274,8 @@ class Container extends Nette\Forms\Container
 	 */
 	public function remove(Nette\ComponentModel\Container $container, bool $cleanUpGroups = FALSE): void
 	{
-		if ($container->parent !== $this) {
-			throw new Nette\InvalidArgumentException('Given component ' . $container->name . ' is not children of ' . $this->name . '.');
+		if ($container->getParent() !== $this) {
+			throw new Nette\InvalidArgumentException('Given component ' . $container->getName() . ' is not children of ' . $this->getName() . '.');
 		}
 
 		// to check if form was submitted by this one
@@ -452,7 +452,7 @@ class Container extends Nette\Forms\Container
 				$_this->onClick[] = function (Nette\Forms\Controls\SubmitButton $button) use ($callback) {
 					/** @var self $replicator */
 					$replicator = $button->lookup(static::class);
-					$container = $button->parent;
+					$container = $button->getParent();
 					\assert($container instanceof Nette\ComponentModel\Container);
 					if (is_callable($callback)) {
 						$callback($replicator, $container);
