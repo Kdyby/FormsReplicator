@@ -67,6 +67,12 @@
 		"ecs": "php ./vendor/bin/ecs",
 		"rector": "php ./vendor/bin/rector process --dry-run --ansi",
 		"test": "php ./vendor/bin/tester -s -p php --colors 1 -C ./tests/Replicator",
-		"ci": "[\"@lint\", \"@phpstan\", \"@ecs\", \"@rector\", \"@test\"]"
+		"ci": [
+			"@lint",
+			"@phpstan",
+			"@ecs",
+			"@rector",
+			"@test"
+		]
 	}
 }
