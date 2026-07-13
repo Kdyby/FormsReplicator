@@ -146,9 +146,10 @@ class Container extends Nette\Forms\Container
 
 	private function getFirstControlName(): ?string
 	{
+		// TODO: The first instanceof check should be redundant but PHPStan infers getComponent() returns untyped array.
 		$controls = array_filter(
 			$this->getComponents(),
-			fn ($component): bool => $component instanceof Nette\Forms\Control,
+			fn ($component): bool => $component instanceof Nette\ComponentModel\IComponent && $component instanceof Nette\Forms\Control,
 		);
 		$firstControl = reset($controls);
 
@@ -377,9 +378,11 @@ class Container extends Nette\Forms\Container
 	public function isAllFilled(array $exceptChildren = []): bool
 	{
 		$components = [];
+
+		// TODO: The first instanceof check should be redundant but PHPStan infers getComponent() returns untyped array.
 		$controls = array_filter(
 			$this->getComponents(),
-			fn ($component): bool => $component instanceof Nette\Forms\Control,
+			fn ($component): bool => $component instanceof Nette\ComponentModel\IComponent && $component instanceof Nette\Forms\Control,
 		);
 		foreach ($controls as $control) {
 			if (($name = $control->getName()) !== null) {

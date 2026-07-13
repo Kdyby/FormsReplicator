@@ -23,3 +23,12 @@ parameters:
             # Only occurs with phpstan/phpstan-deprecation-rules ≥ 2.0.2 and nette/component-model ≥ 3.0.0 and < 4.0.0
             reportUnmatched: false
             path: src/Replicator/Container.php
+
+        # https://github.com/phpstan/phpstan-nette/issues/141
+        -
+            message: '#^Instanceof between Nette\\ComponentModel\\IComponent and Nette\\ComponentModel\\IComponent will always evaluate to true\.$#'
+            identifier: instanceof.alwaysTrue
+            # Only occurs with component-model < 4.0.0
+            reportUnmatched: false
+            count: 2
+            path: src/Replicator/Container.php
