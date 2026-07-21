@@ -11,3 +11,15 @@ parameters:
     paths:
         - src/
     treatPhpDocTypesAsCertain: false
+
+    ignoreErrors:
+        -
+            message: '''
+                #^Call to deprecated method attached\(\) of class Kdyby\\Replicator\\Container\:
+                use monitor\(\$type, \$attached\)$#
+            '''
+            identifier: method.deprecated
+            count: 2
+            # Only occurs with phpstan/phpstan-deprecation-rules ≥ 2.0.2 and nette/component-model ≥ 3.0.0 and < 4.0.0
+            reportUnmatched: false
+            path: src/Replicator/Container.php
