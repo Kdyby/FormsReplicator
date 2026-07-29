@@ -4,6 +4,9 @@ on:
     push:
     pull_request:
 
+permissions:
+    contents: read
+
 jobs:
     parallel-lint:
         name: 🔎 Parallel lint
@@ -20,7 +23,9 @@ jobs:
                     - "highest"
         steps:
             -   name: ⬇️ Checkout repo
-                uses: actions/checkout@v4
+                uses: actions/checkout@v7
+                with:
+                    persist-credentials: false
 
             -   name: 🐘 Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -29,7 +34,7 @@ jobs:
                     coverage: none
 
             -   name: 📥 Install dependencies
-                uses: ramsey/composer-install@v3
+                uses: ramsey/composer-install@4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -55,7 +60,9 @@ jobs:
                         dependencies: "lowest"
         steps:
             -   name: ⬇️ Checkout repo
-                uses: actions/checkout@v4
+                uses: actions/checkout@v7
+                with:
+                    persist-credentials: false
 
             -   name: 🐘 Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -64,7 +71,7 @@ jobs:
                     coverage: none
 
             -   name: 📥 Install dependencies
-                uses: ramsey/composer-install@v3
+                uses: ramsey/composer-install@4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -86,7 +93,9 @@ jobs:
                     - "highest"
         steps:
             -   name: ⬇️ Checkout repo
-                uses: actions/checkout@v4
+                uses: actions/checkout@v7
+                with:
+                    persist-credentials: false
 
             -   name: 🐘 Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -95,7 +104,7 @@ jobs:
                     coverage: none
 
             -   name: 📥 Install dependencies
-                uses: ramsey/composer-install@v3
+                uses: ramsey/composer-install@4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -117,7 +126,9 @@ jobs:
                     - "highest"
         steps:
             -   name: ⬇️ Checkout repo
-                uses: actions/checkout@v4
+                uses: actions/checkout@v7
+                with:
+                    persist-credentials: false
 
             -   name: 🐘 Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -126,7 +137,7 @@ jobs:
                     coverage: none
 
             -   name: 📥 Install dependencies
-                uses: ramsey/composer-install@v3
+                uses: ramsey/composer-install@4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
@@ -152,7 +163,9 @@ jobs:
                         dependencies: "lowest"
         steps:
             -   name: ⬇️ Checkout repo
-                uses: actions/checkout@v4
+                uses: actions/checkout@v7
+                with:
+                    persist-credentials: false
 
             -   name: 🐘 Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -161,7 +174,7 @@ jobs:
                     coverage: xdebug
 
             -   name: 📥 Install dependencies
-                uses: ramsey/composer-install@v3
+                uses: ramsey/composer-install@4.0.0
                 with:
                     dependency-versions: "${{ matrix.dependencies }}"
 
